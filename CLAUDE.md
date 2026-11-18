@@ -2,7 +2,7 @@
 
 Sitio de demostración de una peluquería **ficticia** ("NUDO Estudio de Pelo", Palermo, CABA), usado por Estudio Nodo como template para vender a clientes. Dos objetivos: mostrar el trabajo y el estilo del salón, y conseguir turnos (elegir servicio → reservar por el sistema de turnos o por WhatsApp).
 
-Estado: setup terminado. **Todavía no hay páginas ni secciones** (solo el `src/pages/index.astro` stub de Astro). No crear páginas hasta que se pida.
+Estado: sitio completo (Home, Servicios, Galería, Equipo + perfiles, legales, 404), construido con el flujo de Impeccable. Sistema visual registrado en `DESIGN.md`; producto en `PRODUCT.md`.
 
 ## Stack
 
@@ -86,7 +86,7 @@ Las imágenes de `referencias/`: igualá la sensación y el estilo (paleta, text
 
 Lo que se toma de cada una:
 
-- **Mane**: barra de anuncio oscura arriba; header logo a la izquierda, navegación chica en mayúsculas, CTA sólido oscuro a la derecha; hero dividido (texto a la izquierda, foto a la derecha que se funde con el fondo); eyebrow en mayúsculas con filete; una palabra del titular en color de marca; franja de 4 beneficios con ícono lineal y divisores verticales; cards de servicio foto + nombre en mayúsculas + precio; banda oscura con foto del salón + bloque de reserva.
+- **Mane**: barra de anuncio oscura arriba; header logo a la izquierda, navegación chica en mayúsculas, CTA sólido oscuro a la derecha; hero dividido (texto a la izquierda, foto a la derecha que se funde con el fondo); una palabra del titular en color de marca; franja de 4 beneficios con ícono lineal y divisores verticales; cards de servicio foto + nombre en mayúsculas + precio; banda oscura con foto del salón + bloque de reserva.
 - **Nordic Cut**: aire, foto del salón con radio grande, interiores con luz natural, espejos ovalados → la forma de **arco** como acento.
 - **Sand & Steel**: fondo arena + crema en dos tonos, con la foto "puenteando" el cambio de color; CTA chocolate; titular serif centrado en minúsculas/sentence case.
 - **Cuttheory**: bloques que se superponen (foto + caja de texto oscura encima) y footer oscuro.
@@ -115,16 +115,16 @@ Patrones de layout tomados de las referencias:
 - **Franja de propuesta** debajo del hero: 3-4 puntos ("turnos largos", "diagnóstico antes de empezar", "productos profesionales", "reservás en dos toques") con ícono lineal y divisores verticales de 1px; en mobile, scroll horizontal o 2×2.
 - **Servicios destacados en home**: cards foto (4:5) + nombre en mayúsculas + "desde $" + duración, en fila con scroll-snap horizontal y flechas manuales (nunca autoplay). La **carta completa** es otra cosa: filas con divisores de 1px.
 - **Cambios de fondo por bloque** (crema → arena → crema) y una foto que puentea el cambio; **una sola banda oscura** (espresso) por página, para el salón o el CTA final.
-- **Eyebrow** en mayúsculas chicas con filete corto de 1px (24-40px) antes o después.
+- **Sin eyebrows**: nada de etiquetas chicas arriba de los titulares (prohibido por el craft floor de Impeccable); el titular se sostiene solo. La palabra en itálica bronce va solo en el hero, la banda del salón, el CTA final y el H1 de Servicios.
 - Densidad baja: un mensaje por bloque, mucho aire vertical (96-160px entre bloques en desktop, 64-96px en mobile).
 
 ## SISTEMA VISUAL
 
 ### Tipografía
 
-- **Display: Fraunces** (variable, `@fontsource-variable/fraunces`). Serif de alto contraste como las de las referencias, pero con más calidez y un poco de carácter (eje `SOFT` ~50, `WONK` 0, `opsz` automático). Peso 350-420, **nunca bold**. Sentence case (no todo mayúsculas), tracking -0.02em en tamaños grandes, interlineado 1.0-1.1. Una palabra clave del titular puede ir en **itálica** con `--color-brand` (patrón de Mane).
+- **Display: Fraunces** (variable, `@fontsource-variable/fraunces`). Serif de alto contraste como las de las referencias, pero con más calidez y un poco de carácter (subset `opsz` de Fontsource: peso + tamaño óptico automático; SOFT/WONK no se cargan para ahorrar ~120 KB; `opsz` automático). Peso 350-420, **nunca bold**. Sentence case (no todo mayúsculas), tracking -0.02em en tamaños grandes, interlineado 1.0-1.1. Una palabra clave del titular puede ir en **itálica** con `--color-brand` (patrón de Mane).
 - **Cuerpo y UI: Manrope** (variable, `@fontsource-variable/manrope`). 16-18px, peso 400-500, interlineado 1.6.
-- **Etiquetas / eyebrows / navegación / botones**: Manrope 12-13px, peso 600, **mayúsculas, tracking 0.12-0.16em** (patrón de Mane y Nordic).
+- **Etiquetas de UI / navegación / botones** (nunca arriba de un titular): Manrope 12-13px, peso 600, **mayúsculas, tracking 0.12-0.16em** (patrón de Mane y Nordic).
 - Precios y duraciones: `font-variant-numeric: tabular-nums` (Manrope tiene cifras tabulares).
 - Escala fluida con `clamp()`:
   - display: `clamp(2.75rem, 1.6rem + 5vw, 5.75rem)`
@@ -148,7 +148,7 @@ Tokens a cargar en `@theme` (`--color-*`). Contrastes medidos (WCAG) sobre `bg`:
 | `--color-muted` | `#6B5F52` | Texto secundario, bajadas | 5.4:1 (4.7 sobre surface) |
 | `--color-line` | `#D6C7B0` | Divisores de 1px, bordes | decorativo |
 | `--color-brand` | `#9C7349` | Bronce: palabra destacada, filetes, íconos. **Solo texto ≥ 24px** | 3.7:1 |
-| `--color-brand-strong` | `#7A5533` | Bronce para texto chico (eyebrows, links) | 5.7:1 |
+| `--color-brand-strong` | `#7A5533` | Bronce para texto chico (links, etiquetas) | 5.7:1 |
 | `--color-accent` | `#5B3A25` | Chocolate: fondo de CTAs principales | 8.8:1 (texto `bg` encima) |
 | `--color-on-accent` | `#F4EEE5` | Texto sobre CTA | 8.8:1 |
 | `--color-night` | `#1F1A16` | Banda oscura, footer opcional | — |
@@ -221,4 +221,4 @@ Nunca:
 
 - Código, identificadores y comentarios en inglés; copy de la UI en español rioplatense (voz del salón: cercana, relajada, con onda pero profesional).
 - Commits convencionales, sin atribución de IA.
-- Impeccable: pendiente de instalar para este proyecto (scope local) y correr su `teach`.
+- Impeccable instalado (scope local). Contrato de dirección en `.impeccable/surfaces/`.

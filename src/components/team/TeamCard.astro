@@ -4,7 +4,7 @@ import type { Stylist } from '../../lib/services';
 import { site } from '../../config/site';
 import { fill, firstName } from '../../lib/format';
 import { bookingHref } from '../../lib/booking';
-import { externalAttrs } from '../../lib/links';
+import { externalAttrs, isExternal } from '../../lib/links';
 import Icon from '../ui/Icon.astro';
 
 interface Props {
@@ -79,7 +79,7 @@ const copy = site.copy.team;
             >
               <span class="link-line">{fill(copy.bookWith, { name: firstName(t.name) })}</span>
               <Icon name="arrow-up-right" size={16} />
-              <span class="sr-only">{site.ui.newTabHint}</span>
+              {isExternal(bookingHref({ stylist: t.name })) && <span class="sr-only">{site.ui.newTabHint}</span>}
             </a>
           </div>
         </>

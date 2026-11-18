@@ -1,0 +1,472 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-18T15:41:00+00:00",
+  "title": "Design System: NUDO Estudio de Pelo",
+  "extensions": {
+    "colorMeta": {
+      "cream-ground": {
+        "role": "neutral",
+        "displayName": "Cream Ground",
+        "canonical": "oklch(95.1% 0.014 78)",
+        "cssVar": "--color-bg",
+        "tonalRamp": [
+          "oklch(15% 0.006 78)",
+          "oklch(25% 0.01 78)",
+          "oklch(35% 0.014 78)",
+          "oklch(45% 0.014 78)",
+          "oklch(57% 0.014 78)",
+          "oklch(70% 0.014 78)",
+          "oklch(83% 0.011 78)",
+          "oklch(95% 0.006 78)"
+        ]
+      },
+      "sand-band": {
+        "role": "neutral",
+        "displayName": "Sand Band",
+        "canonical": "oklch(90.8% 0.027 80)",
+        "cssVar": "--color-surface",
+        "tonalRamp": [
+          "oklch(15% 0.012 80)",
+          "oklch(25% 0.02 80)",
+          "oklch(35% 0.027 80)",
+          "oklch(45% 0.027 80)",
+          "oklch(57% 0.027 80)",
+          "oklch(70% 0.027 80)",
+          "oklch(83% 0.021 80)",
+          "oklch(95% 0.012 80)"
+        ]
+      },
+      "carta-paper": {
+        "role": "neutral",
+        "displayName": "Carta Paper",
+        "canonical": "oklch(98.0% 0.007 81)",
+        "cssVar": "--color-paper",
+        "tonalRamp": [
+          "oklch(15% 0.004 81)",
+          "oklch(25% 0.005 81)",
+          "oklch(35% 0.007 81)",
+          "oklch(45% 0.007 81)",
+          "oklch(57% 0.007 81)",
+          "oklch(70% 0.007 81)",
+          "oklch(83% 0.006 81)",
+          "oklch(95% 0.004 81)"
+        ]
+      },
+      "espresso-ink": {
+        "role": "neutral",
+        "displayName": "Espresso Ink",
+        "canonical": "oklch(21.9% 0.012 56)",
+        "cssVar": "--color-ink",
+        "tonalRamp": [
+          "oklch(15% 0.005 56)",
+          "oklch(25% 0.009 56)",
+          "oklch(35% 0.012 56)",
+          "oklch(45% 0.012 56)",
+          "oklch(57% 0.012 56)",
+          "oklch(70% 0.012 56)",
+          "oklch(83% 0.01 56)",
+          "oklch(95% 0.005 56)"
+        ]
+      },
+      "walnut-muted": {
+        "role": "neutral",
+        "displayName": "Walnut Muted",
+        "canonical": "oklch(49.3% 0.025 69)",
+        "cssVar": "--color-muted",
+        "tonalRamp": [
+          "oklch(15% 0.011 69)",
+          "oklch(25% 0.018 69)",
+          "oklch(35% 0.025 69)",
+          "oklch(45% 0.025 69)",
+          "oklch(57% 0.025 69)",
+          "oklch(70% 0.025 69)",
+          "oklch(83% 0.02 69)",
+          "oklch(95% 0.011 69)"
+        ]
+      },
+      "linen-rule": {
+        "role": "neutral",
+        "displayName": "Linen Rule",
+        "canonical": "oklch(83.6% 0.035 79)",
+        "cssVar": "--color-line",
+        "tonalRamp": [
+          "oklch(15% 0.015 79)",
+          "oklch(25% 0.026 79)",
+          "oklch(35% 0.035 79)",
+          "oklch(45% 0.035 79)",
+          "oklch(57% 0.035 79)",
+          "oklch(70% 0.035 79)",
+          "oklch(83% 0.028 79)",
+          "oklch(95% 0.015 79)"
+        ]
+      },
+      "bronze": {
+        "role": "secondary",
+        "displayName": "Bronze",
+        "canonical": "oklch(58.7% 0.078 66)",
+        "cssVar": "--color-brand",
+        "tonalRamp": [
+          "oklch(15% 0.034 66)",
+          "oklch(25% 0.056 66)",
+          "oklch(35% 0.078 66)",
+          "oklch(45% 0.078 66)",
+          "oklch(57% 0.078 66)",
+          "oklch(70% 0.078 66)",
+          "oklch(83% 0.061 66)",
+          "oklch(95% 0.034 66)"
+        ]
+      },
+      "bronze-strong": {
+        "role": "secondary",
+        "displayName": "Bronze Strong",
+        "canonical": "oklch(48.1% 0.069 63)",
+        "cssVar": "--color-brand-strong",
+        "tonalRamp": [
+          "oklch(15% 0.03 63)",
+          "oklch(25% 0.05 63)",
+          "oklch(35% 0.069 63)",
+          "oklch(45% 0.069 63)",
+          "oklch(57% 0.069 63)",
+          "oklch(70% 0.069 63)",
+          "oklch(83% 0.054 63)",
+          "oklch(95% 0.03 63)"
+        ]
+      },
+      "chocolate": {
+        "role": "primary",
+        "displayName": "Chocolate",
+        "canonical": "oklch(38.2% 0.057 53)",
+        "cssVar": "--color-accent",
+        "tonalRamp": [
+          "oklch(15% 0.025 53)",
+          "oklch(25% 0.042 53)",
+          "oklch(35% 0.057 53)",
+          "oklch(45% 0.057 53)",
+          "oklch(57% 0.057 53)",
+          "oklch(70% 0.057 53)",
+          "oklch(83% 0.045 53)",
+          "oklch(95% 0.025 53)"
+        ]
+      },
+      "on-chocolate": {
+        "role": "primary",
+        "displayName": "On Chocolate",
+        "canonical": "oklch(95.1% 0.014 78)",
+        "cssVar": "--color-on-accent",
+        "tonalRamp": [
+          "oklch(15% 0.006 78)",
+          "oklch(25% 0.01 78)",
+          "oklch(35% 0.014 78)",
+          "oklch(45% 0.014 78)",
+          "oklch(57% 0.014 78)",
+          "oklch(70% 0.014 78)",
+          "oklch(83% 0.011 78)",
+          "oklch(95% 0.006 78)"
+        ]
+      },
+      "espresso-night": {
+        "role": "neutral",
+        "displayName": "Espresso Night",
+        "canonical": "oklch(22.2% 0.011 61)",
+        "cssVar": "--color-night",
+        "tonalRamp": [
+          "oklch(15% 0.005 61)",
+          "oklch(25% 0.008 61)",
+          "oklch(35% 0.011 61)",
+          "oklch(45% 0.011 61)",
+          "oklch(57% 0.011 61)",
+          "oklch(70% 0.011 61)",
+          "oklch(83% 0.009 61)",
+          "oklch(95% 0.005 61)"
+        ]
+      },
+      "on-night": {
+        "role": "neutral",
+        "displayName": "On Night",
+        "canonical": "oklch(93.1% 0.018 78)",
+        "cssVar": "--color-on-night",
+        "tonalRamp": [
+          "oklch(15% 0.008 78)",
+          "oklch(25% 0.013 78)",
+          "oklch(35% 0.018 78)",
+          "oklch(45% 0.018 78)",
+          "oklch(57% 0.018 78)",
+          "oklch(70% 0.018 78)",
+          "oklch(83% 0.014 78)",
+          "oklch(95% 0.008 78)"
+        ]
+      },
+      "bronze-on-night": {
+        "role": "secondary",
+        "displayName": "Bronze on Night",
+        "canonical": "oklch(74.2% 0.071 70)",
+        "cssVar": "--color-brand-on-night",
+        "tonalRamp": [
+          "oklch(15% 0.031 70)",
+          "oklch(25% 0.052 70)",
+          "oklch(35% 0.071 70)",
+          "oklch(45% 0.071 70)",
+          "oklch(57% 0.071 70)",
+          "oklch(70% 0.071 70)",
+          "oklch(83% 0.056 70)",
+          "oklch(95% 0.031 70)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Inner-page intro H1s; words enter one by one."
+      },
+      "hero": {
+        "displayName": "Hero",
+        "purpose": "Home hero headline only."
+      },
+      "headline-lg": {
+        "displayName": "Headline Lg",
+        "purpose": "Night band and major section titles."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Default section headings, max 18ch."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Stylist, product line and card titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text and leads."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Addresses, hours, roles, product descriptions."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase tracked buttons, nav, action links, info-block labels."
+      },
+      "figures": {
+        "displayName": "Figures",
+        "purpose": "Tabular lining numerals for prices, durations, hours, counts."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-out-soft",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "The single easing for every transition and entrance."
+      },
+      {
+        "name": "state-change",
+        "value": "300ms ease-out-soft",
+        "purpose": "Button fill inversion, chip color, arrow 2px nudge."
+      },
+      {
+        "name": "link-underline",
+        "value": "250ms ease-out-soft",
+        "purpose": "Underline color and offset tightening on hover."
+      },
+      {
+        "name": "word-in",
+        "value": "700ms ease-out-soft, 120ms + 70ms per word",
+        "purpose": "Hero and page-intro headlines enter word by word (rise 0.35em plus clip)."
+      },
+      {
+        "name": "reveal-wipe",
+        "value": "scroll-driven view() timeline, 20px rise plus upward clip; IO fallback 600-700ms staggered 80ms",
+        "purpose": "Section and card reveals."
+      },
+      {
+        "name": "panel-in",
+        "value": "380ms ease-out-soft, 6px rise",
+        "purpose": "Carta tab panels and FAQ answers."
+      },
+      {
+        "name": "drift",
+        "value": "scroll-driven, translateY -4% to 4% at scale 1.1",
+        "purpose": "Subtle parallax on salon photos."
+      },
+      {
+        "name": "marquee",
+        "value": "60s linear infinite",
+        "purpose": "Keyword marquee; pauses on hover and focus."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "all of the above disabled; view transitions 0.01ms",
+        "purpose": "Full prefers-reduced-motion support."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ],
+    "focus": {
+      "value": "outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 2px",
+      "night": "outline-color: var(--color-brand-on-night)"
+    },
+    "shapes": {
+      "arch": "border-radius: 9999px 9999px 4px 4px"
+    },
+    "texture": {
+      "grain": "Optional SVG feTurbulence overlay, opacity 0.035, multiply, off by default via a layout flag; not enabled on any shipped page."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Chocolate Reservar block; empties to an outline on hover.",
+      "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\"><span>Reservar turno</span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 24px;border:1px solid;border-radius:var(--radius-button,2px);text-decoration:none;font-family: var(--font-sans); font-size: var(--text-label, 0.8125rem); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.3;transition:background-color 300ms cubic-bezier(0.22,1,0.36,1),color 300ms cubic-bezier(0.22,1,0.36,1),border-color 300ms cubic-bezier(0.22,1,0.36,1);} .ds-btn svg{transition:transform 300ms cubic-bezier(0.22,1,0.36,1);} .ds-btn:hover svg{transform:translateX(2px);} .ds-btn:focus-visible{outline:2px solid var(--color-accent,#5B3A25);outline-offset:3px;} .ds-btn-primary{background:var(--color-accent,#5B3A25);border-color:var(--color-accent,#5B3A25);color:var(--color-on-accent,#F4EEE5);} .ds-btn-primary:hover{background:transparent;color:var(--color-accent,#5B3A25);}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined chocolate action, used for WhatsApp with a leading icon.",
+      "html": "<a class=\"ds-btn ds-btn-secondary\" href=\"#\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\"/></svg><span>Escribinos por WhatsApp</span></a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 24px;border:1px solid;border-radius:var(--radius-button,2px);text-decoration:none;font-family: var(--font-sans); font-size: var(--text-label, 0.8125rem); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.3;transition:background-color 300ms cubic-bezier(0.22,1,0.36,1),color 300ms cubic-bezier(0.22,1,0.36,1),border-color 300ms cubic-bezier(0.22,1,0.36,1);} .ds-btn svg{transition:transform 300ms cubic-bezier(0.22,1,0.36,1);} .ds-btn:hover svg{transform:translateX(2px);} .ds-btn:focus-visible{outline:2px solid var(--color-accent,#5B3A25);outline-offset:3px;} .ds-btn-secondary{background:transparent;border-color:var(--color-accent,#5B3A25);color:var(--color-accent,#5B3A25);} .ds-btn-secondary:hover{background:var(--color-accent,#5B3A25);color:var(--color-on-accent,#F4EEE5);}"
+    },
+    {
+      "name": "Night Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary-night",
+      "description": "Primary action inside the espresso night band.",
+      "html": "<div class=\"ds-night\"><a class=\"ds-btn ds-btn-night\" href=\"#\"><span>Reservar turno</span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a></div>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 24px;border:1px solid;border-radius:var(--radius-button,2px);text-decoration:none;font-family: var(--font-sans); font-size: var(--text-label, 0.8125rem); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.3;transition:background-color 300ms cubic-bezier(0.22,1,0.36,1),color 300ms cubic-bezier(0.22,1,0.36,1),border-color 300ms cubic-bezier(0.22,1,0.36,1);} .ds-btn svg{transition:transform 300ms cubic-bezier(0.22,1,0.36,1);} .ds-btn:hover svg{transform:translateX(2px);} .ds-btn:focus-visible{outline:2px solid var(--color-accent,#5B3A25);outline-offset:3px;} .ds-night{background:var(--color-night,#1F1A16);padding:24px;} .ds-btn-night{background:var(--color-brand-on-night,#C9A47A);border-color:var(--color-brand-on-night,#C9A47A);color:var(--color-night,#1F1A16);} .ds-btn-night:hover{background:transparent;color:var(--color-brand-on-night,#C9A47A);} .ds-btn-night:focus-visible{outline-color:var(--color-brand-on-night,#C9A47A);}"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "chip",
+      "refersTo": "chip-category",
+      "description": "Pill tab for picking a service category; selected fills chocolate.",
+      "html": "<div role=\"tablist\" style=\"display:flex;gap:6px\"><button class=\"ds-chip\" role=\"tab\" aria-selected=\"true\">Cortes</button><button class=\"ds-chip\" role=\"tab\" aria-selected=\"false\">Color</button><button class=\"ds-chip\" role=\"tab\" aria-selected=\"false\">Tratamientos</button></div>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid transparent;border-radius:999px;background:transparent;font-family:var(--font-sans);font-size:0.875rem;font-weight:600;color:var(--color-muted,#6B5F52);cursor:pointer;white-space:nowrap;transition:color 300ms,background-color 300ms;} .ds-chip:hover{color:var(--color-ink,#1F1915);} .ds-chip[aria-selected=true]{background:var(--color-accent,#5B3A25);border-color:var(--color-accent,#5B3A25);color:var(--color-on-accent,#F4EEE5);} .ds-chip:focus-visible{outline:2px solid var(--color-accent,#5B3A25);outline-offset:3px;}"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Outline pill tag for conditions such as requiere consulta.",
+      "html": "<span class=\"ds-badge\">Requiere consulta</span> <span class=\"ds-badge ds-badge-muted\">Seña 30%</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;padding:2px 10px;border:1px solid color-mix(in oklab,var(--color-brand-strong,#7A5533) 50%,transparent);border-radius:999px;font-family:var(--font-sans);font-size:0.75rem;line-height:1.25rem;font-weight:600;color:var(--color-brand-strong,#7A5533);white-space:nowrap;} .ds-badge-muted{border-color:var(--color-line,#D6C7B0);color:var(--color-muted,#6B5F52);}"
+    },
+    {
+      "name": "Carta Row",
+      "kind": "custom",
+      "refersTo": "carta-card",
+      "description": "Service name, dotted leader, desde price, duration and Reservar link.",
+      "html": "<ul style=\"margin:0;padding:0\"><li class=\"ds-carta-row\"><div class=\"ds-carta-top\"><h3 class=\"ds-carta-name\">Corte y peinado</h3><span class=\"ds-carta-leader\" aria-hidden=\"true\"></span><p class=\"ds-carta-price\"><span class=\"ds-muted\">desde</span> <strong>$ 28.000</strong></p></div><div class=\"ds-carta-meta\"><p class=\"ds-carta-dur\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" style=\"color:var(--color-brand,#9C7349)\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/></svg><span>1 h</span></p><a class=\"ds-booklink\" href=\"#\"><span>Reservar</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a></div></li><li class=\"ds-carta-row\"><div class=\"ds-carta-top\"><h3 class=\"ds-carta-name\">Balayage</h3><span class=\"ds-carta-leader\" aria-hidden=\"true\"></span><p class=\"ds-carta-price\"><span class=\"ds-muted\">desde</span> <strong>$ 120.000</strong></p></div><div class=\"ds-carta-meta\"><p class=\"ds-carta-dur\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" style=\"color:var(--color-brand,#9C7349)\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/></svg><span>3 a 4 h</span></p><a class=\"ds-booklink\" href=\"#\"><span>Reservar</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a></div></li></ul>",
+      "css": ".ds-carta-row{list-style:none;border-top:1px solid var(--color-line,#D6C7B0);padding:16px 0;} .ds-carta-row:first-child{border-top:0;} .ds-carta-top{display:flex;align-items:baseline;gap:12px;} .ds-carta-name{margin:0;font-family:var(--font-display);font-weight:380;font-size:1.25rem;line-height:1.2;letter-spacing:-0.01em;color:var(--color-ink,#1F1915);} .ds-carta-leader{flex:1;min-width:24px;transform:translateY(-4px);border-bottom:1px dotted color-mix(in oklab,var(--color-muted,#6B5F52) 60%,transparent);} .ds-carta-price{margin:0;white-space:nowrap;font-size:0.9375rem;font-variant-numeric:tabular-nums lining-nums;} .ds-carta-price strong{font-weight:600;color:var(--color-ink,#1F1915);} .ds-muted{color:var(--color-muted,#6B5F52);} .ds-carta-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px;} .ds-carta-dur{margin:0;display:inline-flex;align-items:center;gap:6px;font-size:0.875rem;color:var(--color-muted,#6B5F52);font-variant-numeric:tabular-nums;} .ds-booklink{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--color-accent,#5B3A25);text-decoration:none;font-family: var(--font-sans); font-size: var(--text-label, 0.8125rem); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.3;} .ds-booklink span{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.28em;text-decoration-color:color-mix(in oklab,currentColor 35%,transparent);transition:text-decoration-color 250ms cubic-bezier(0.22,1,0.36,1),text-underline-offset 250ms cubic-bezier(0.22,1,0.36,1);} .ds-booklink:hover span{text-decoration-color:currentColor;text-underline-offset:0.18em;} .ds-booklink svg{transition:transform 300ms cubic-bezier(0.22,1,0.36,1);} .ds-booklink:hover svg{transform:translateX(2px);} .ds-booklink:focus-visible{outline:2px solid var(--color-accent,#5B3A25);outline-offset:3px;border-radius:2px;}"
+    },
+    {
+      "name": "Carta Switcher",
+      "kind": "card",
+      "refersTo": "carta-card",
+      "description": "The hero's printed price card: category tabs over featured carta rows.",
+      "html": "<section class=\"ds-carta\"><div class=\"ds-carta-tabs\" role=\"tablist\"><button class=\"ds-chip\" role=\"tab\" aria-selected=\"true\">Cortes</button><button class=\"ds-chip\" role=\"tab\" aria-selected=\"false\">Color</button><button class=\"ds-chip\" role=\"tab\" aria-selected=\"false\">Peinados</button></div><ul class=\"ds-carta-list\"><li class=\"ds-carta-row\"><div class=\"ds-carta-top\"><h3 class=\"ds-carta-name\">Corte y peinado</h3><span class=\"ds-carta-leader\" aria-hidden=\"true\"></span><p class=\"ds-carta-price\"><span class=\"ds-muted\">desde</span> <strong>$ 28.000</strong></p></div><div class=\"ds-carta-meta\"><p class=\"ds-carta-dur\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" style=\"color:var(--color-brand,#9C7349)\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/></svg><span>1 h</span></p><a class=\"ds-booklink\" href=\"#\"><span>Reservar</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a></div></li><li class=\"ds-carta-row\"><div class=\"ds-carta-top\"><h3 class=\"ds-carta-name\">Corte con diagnóstico</h3><span class=\"ds-carta-leader\" aria-hidden=\"true\"></span><p class=\"ds-carta-price\"><span class=\"ds-muted\">desde</span> <strong>$ 34.000</strong></p></div><div class=\"ds-carta-meta\"><p class=\"ds-carta-dur\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" style=\"color:var(--color-brand,#9C7349)\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/></svg><span>1 h 15 min</span></p><a class=\"ds-booklink\" href=\"#\"><span>Reservar</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a></div></li></ul></section>",
+      "css": ".ds-carta{background:var(--color-paper,#FBF8F3);border:1px solid var(--color-line,#D6C7B0);border-radius:var(--radius-photo,4px);max-width:520px;} .ds-carta-tabs{display:flex;gap:6px;padding:8px 16px;border-bottom:1px solid var(--color-line,#D6C7B0);overflow-x:auto;} .ds-carta-list{margin:0;padding:2px 20px 4px;} .ds-chip{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid transparent;border-radius:999px;background:transparent;font-family:var(--font-sans);font-size:0.875rem;font-weight:600;color:var(--color-muted,#6B5F52);cursor:pointer;white-space:nowrap;transition:color 300ms,background-color 300ms;} .ds-chip:hover{color:var(--color-ink,#1F1915);} .ds-chip[aria-selected=true]{background:var(--color-accent,#5B3A25);border-color:var(--color-accent,#5B3A25);color:var(--color-on-accent,#F4EEE5);} .ds-chip:focus-visible{outline:2px solid var(--color-accent,#5B3A25);outline-offset:3px;} .ds-carta-row{list-style:none;border-top:1px solid var(--color-line,#D6C7B0);padding:16px 0;} .ds-carta-row:first-child{border-top:0;} .ds-carta-top{display:flex;align-items:baseline;gap:12px;} .ds-carta-name{margin:0;font-family:var(--font-display);font-weight:380;font-size:1.25rem;line-height:1.2;letter-spacing:-0.01em;color:var(--color-ink,#1F1915);} .ds-carta-leader{flex:1;min-width:24px;transform:translateY(-4px);border-bottom:1px dotted color-mix(in oklab,var(--color-muted,#6B5F52) 60%,transparent);} .ds-carta-price{margin:0;white-space:nowrap;font-size:0.9375rem;font-variant-numeric:tabular-nums lining-nums;} .ds-carta-price strong{font-weight:600;color:var(--color-ink,#1F1915);} .ds-muted{color:var(--color-muted,#6B5F52);} .ds-carta-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px;} .ds-carta-dur{margin:0;display:inline-flex;align-items:center;gap:6px;font-size:0.875rem;color:var(--color-muted,#6B5F52);font-variant-numeric:tabular-nums;} .ds-booklink{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--color-accent,#5B3A25);text-decoration:none;font-family: var(--font-sans); font-size: var(--text-label, 0.8125rem); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.3;} .ds-booklink span{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.28em;text-decoration-color:color-mix(in oklab,currentColor 35%,transparent);transition:text-decoration-color 250ms cubic-bezier(0.22,1,0.36,1),text-underline-offset 250ms cubic-bezier(0.22,1,0.36,1);} .ds-booklink:hover span{text-decoration-color:currentColor;text-underline-offset:0.18em;} .ds-booklink svg{transition:transform 300ms cubic-bezier(0.22,1,0.36,1);} .ds-booklink:hover svg{transform:translateX(2px);} .ds-booklink:focus-visible{outline:2px solid var(--color-accent,#5B3A25);outline-offset:3px;border-radius:2px;}"
+    },
+    {
+      "name": "Main Navigation",
+      "kind": "nav",
+      "refersTo": "button-primary",
+      "description": "Cream header with tracked uppercase links and a Reservar button.",
+      "html": "<header class=\"ds-nav\"><span class=\"ds-logo\">NUDO</span><nav><a href=\"#\" aria-current=\"page\">Servicios</a><a href=\"#\">Galería</a><a href=\"#\">Equipo</a></nav><a class=\"ds-btn ds-btn-primary\" href=\"#\"><span>Reservar turno</span></a></header>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 24px;border:1px solid;border-radius:var(--radius-button,2px);text-decoration:none;font-family: var(--font-sans); font-size: var(--text-label, 0.8125rem); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.3;transition:background-color 300ms cubic-bezier(0.22,1,0.36,1),color 300ms cubic-bezier(0.22,1,0.36,1),border-color 300ms cubic-bezier(0.22,1,0.36,1);} .ds-btn svg{transition:transform 300ms cubic-bezier(0.22,1,0.36,1);} .ds-btn:hover svg{transform:translateX(2px);} .ds-btn:focus-visible{outline:2px solid var(--color-accent,#5B3A25);outline-offset:3px;} .ds-btn-primary{background:var(--color-accent,#5B3A25);border-color:var(--color-accent,#5B3A25);color:var(--color-on-accent,#F4EEE5);} .ds-btn-primary:hover{background:transparent;color:var(--color-accent,#5B3A25);} .ds-nav{display:flex;align-items:center;justify-content:space-between;gap:32px;height:68px;padding:0 24px;background:var(--color-bg,#F4EEE5);border-bottom:1px solid var(--color-line,#D6C7B0);} .ds-logo{font-family:var(--font-display);font-weight:380;font-size:1.5rem;letter-spacing:-0.02em;color:var(--color-ink,#1F1915);} .ds-nav nav{display:flex;gap:24px;flex:1;} .ds-nav nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--color-ink,#1F1915);text-decoration:none;text-underline-offset:0.5em;text-decoration-color:var(--color-brand,#9C7349);font-family: var(--font-sans); font-size: var(--text-label, 0.8125rem); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.3;transition:color 200ms;} .ds-nav nav a:hover{color:var(--color-brand-strong,#7A5533);} .ds-nav nav a[aria-current=page]{text-decoration-line:underline;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Printed Carta",
+    "overview": "The salon's price card is the interface. Everything reads like a well-set printed menu on warm cream paper: a soft, low-contrast serif for names and promises, a precise sans with tabular figures for prices and durations, 1px rules and dotted leaders joining a service to its \"desde\" price. The site is calm and unhurried, the way the salon claims to be: generous section air, one dark espresso band per page for the room itself, and photography of the work carrying the persuasion.\n\nThe system is flat and editorial. Depth comes from paper tones (cream ground, sand bands, lighter carta paper, one espresso night band), never from shadows. Actions are chocolate, rectangular and nearly square-cornered with tracked uppercase labels; pills are reserved for things you pick (category chips) or read as a tag (badges). The one signature form is the arch, a mirror-shaped photo crop used once per page.\n\nMotion is quiet and directional: hero headlines enter word by word, sections reveal with a short upward clip-path wipe, salon photos drift a few percent on scroll, a slow keyword marquee runs at 60s. Every one of these is off under reduced motion, and content is visible without JS.",
+    "keyCharacteristics": [
+      "Cream paper ground with sand and espresso bands; flat, no elevation.",
+      "Fraunces (wght + opsz subset, optical size auto) at weight 380, never bold; one italic bronze word per key headline.",
+      "Manrope for UI, tabular lining figures for every price and duration.",
+      "Carta rows: name, dotted leader, \"desde $\" price, clock-and-duration line, Reservar link, 1px rules.",
+      "Rectangular 2px chocolate buttons with uppercase tracked labels.",
+      "Photos at 4px; one arch-cropped photo per page.",
+      "Headlines stand alone: no small label above them."
+    ],
+    "rules": [
+      {
+        "name": "The Paper Stack Rule",
+        "body": "Surfaces separate by tone, in the order cream ground, sand band, carta paper, espresso night. A new section picks a paper; it never lifts with a shadow.",
+        "section": "colors"
+      },
+      {
+        "name": "The Small Bronze Rule",
+        "body": "Bronze below 24px is always Bronze Strong. Plain Bronze at small sizes is for icons and decoration only.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Night Rule",
+        "body": "One espresso band per page, carrying the room (photos of the salon, philosophy, products). Inside it, every accent switches to its on-night pair.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Italic Word Rule",
+        "body": "A key headline may italicize one word or short phrase in bronze, written in copy as `*word*`. Today: hero, night band, final CTA, Servicios carta heading. Not every heading gets one.",
+        "section": "typography"
+      },
+      {
+        "name": "The Standalone Headline Rule",
+        "body": "Nothing sits above a headline. Uppercase labels title lists and info blocks (Dirección, Horarios, Condiciones), never a section heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Figures Rule",
+        "body": "Any number a client compares (price, duration, hours, counts) is tabular and lining.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Lift Rule",
+        "body": "Nothing casts a shadow, at rest or on hover. State is shown by fill inversion, color, underline offset or a 2px translate of an arrow icon.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Arch Rule",
+        "body": "One arch-cropped photo per page, always a 3:4 or 4:5 portrait. A second arch dilutes the signature.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** separate sections by paper tone (cream, sand, carta paper, one espresso night band) and 1px linen rules.",
+      "**Do** set every price and duration in tabular lining figures, prefixed with \"desde\" in muted.",
+      "**Do** keep primary actions as 2px rectangular chocolate buttons with uppercase 13px labels tracked at 0.14em, at least 48px tall.",
+      "**Do** switch every accent to its on-night pair inside the night band (bronze-on-night, on-night at 80% for copy, 20% for rules).",
+      "**Do** use Bronze Strong for any bronze text under 24px.",
+      "**Do** crop exactly one portrait photo per page with the arch; keep other photos at 4px (16px only for large salon photos in the night band).",
+      "**Do** use Lucide icons as inline SVG at stroke 1.5 in currentColor or bronze.",
+      "**Do** gate motion behind reduced-motion and keep content visible without JS; ease with cubic-bezier(0.22, 1, 0.36, 1)."
+    ],
+    "donts": [
+      "**Don't** add shadows to anything, at rest or on hover.",
+      "**Don't** set Fraunces bold or in all caps; hierarchy is size, never weight.",
+      "**Don't** place a small label, kicker or eyebrow above a headline.",
+      "**Don't** italicize more than one word or phrase per headline, or give every heading one.",
+      "**Don't** use pills for primary buttons; pills are for chips, badges and circular controls.",
+      "**Don't** hardcode colors in components; use the palette tokens only.",
+      "**Don't** add decorative gradients; the only fades run from a photo into the cream ground.",
+      "**Don't** use plain Bronze for body-size text."
+    ]
+  }
+}

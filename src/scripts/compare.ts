@@ -15,6 +15,7 @@ export function bindCompare(root: HTMLElement, signal: AbortSignal): void {
 
   const fromPointer = (event: PointerEvent) => {
     const rect = root.getBoundingClientRect();
+    if (rect.width === 0) return; // Hidden or not laid out yet.
     const pct = ((event.clientX - rect.left) / rect.width) * 100;
     input.value = String(Math.min(100, Math.max(0, pct)));
     render();
