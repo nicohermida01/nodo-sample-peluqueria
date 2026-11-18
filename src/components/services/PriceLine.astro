@@ -1,0 +1,16 @@
+---
+import { formatPrice } from '../../lib/format';
+import { site } from '../../config/site';
+
+interface Props {
+  price: number;
+  class?: string;
+}
+
+const { price, class: className } = Astro.props;
+---
+
+<p class:list={['nums whitespace-nowrap', className]}>
+  <span class="text-muted">{site.copy.services.fromLabel}</span>{' '}
+  <span class="font-semibold text-ink">{formatPrice(price)}</span>
+</p>

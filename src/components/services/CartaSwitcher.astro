@@ -1,0 +1,139 @@
+---
+import type { CategoryGroup } from '../../lib/services';
+import { CATEGORY_SHORT_LABELS, featuredOf } from '../../lib/services';
+import { site } from '../../config/site';
+import CartaRow from './CartaRow.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  groups: CategoryGroup[];
+  class?: string;
+  compact?: boolean;
+}
+
+const { groups, class: className, compact = false } = Astro.props;
+const copy = site.copy.hero;
+---
+
+<section
+  aria-label={copy.cartaLabel}
+  class:list={['rounded-photo border border-line bg-paper', className]}
+  data-carta
+>
+  <div
+    role="tablist"
+    aria-label={site.copy.services.categoryNavLabel}
+    class="-mb-px flex gap-1.5 overflow-x-auto overscroll-x-contain border-b border-line px-3 py-2 [scrollbar-width:none] sm:px-4"
+  >
+    {
+      groups.map((g, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`carta-tab-${g.category}`}
+          aria-controls={`carta-panel-${g.category}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          class="inline-flex min-h-10 shrink-0 items-center rounded-pill border border-transparent px-3.5 text-[0.875rem] font-semibold whitespace-nowrap text-muted transition-colors duration-300 hover:text-ink aria-selected:border-accent aria-selected:bg-accent aria-selected:text-on-accent"
+          data-carta-tab
+        >
+          {CATEGORY_SHORT_LABELS[g.category]}
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    groups.map((g, i) => (
+      <div
+        role="tabpanel"
+        id={`carta-panel-${g.category}`}
+        aria-labelledby={`carta-tab-${g.category}`}
+        tabindex="0"
+        hidden={i !== 0}
+        class="carta-panel px-4 pt-0.5 pb-1 sm:px-5"
+        data-carta-panel
+      >
+        <ul>
+          {featuredOf(g.services).map((service) => (
+            <CartaRow service={service} dense={compact} headingLevel="h2" />
+          ))}
+        </ul>
+        <a
+          href={`/servicios#${g.category}`}
+          class="label-caps inline-flex min-h-11 items-center gap-1.5 text-[0.75rem] text-brand-strong no-underline"
+        >
+          <span class="link-line">
+            {copy.cartaMore}: {g.label}
+          </span>
+          <Icon name="arrow-up-right" size={14} />
+        </a>
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .carta-panel:not([hidden]) {
+      animation: panel-in 380ms var(--ease-out-soft);
+    }
+  }
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+</style>
+
+<script>
+  let controller: AbortController | undefined;
+
+  function setupCarta() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    document.querySelectorAll<HTMLElement>('[data-carta]').forEach((root) => {
+      const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-carta-tab]'));
+      const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-carta-panel]'));
+
+      const select = (index: number, focus = false) => {
+        tabs.forEach((tab, i) => {
+          const active = i === index;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          panels[i]!.hidden = !active;
+        });
+        const tab = tabs[index]!;
+        if (focus) tab.focus();
+        const list = tab.parentElement;
+        if (list) list.scrollLeft += tab.getBoundingClientRect().left - list.getBoundingClientRect().left - 12;
+      };
+
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => select(i), { signal });
+        tab.addEventListener(
+          'keydown',
+          (event) => {
+            const last = tabs.length - 1;
+            const keys: Record<string, number> = {
+              ArrowRight: i === last ? 0 : i + 1,
+              ArrowLeft: i === 0 ? last : i - 1,
+              Home: 0,
+              End: last,
+            };
+            const next = keys[event.key];
+            if (next === undefined) return;
+            event.preventDefault();
+            select(next, true);
+          },
+          { signal },
+        );
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupCarta);
+</script>

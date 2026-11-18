@@ -1,0 +1,30 @@
+---
+import Icon from '../ui/Icon.astro';
+import { bookingHref } from '../../lib/booking';
+import { externalAttrs, isExternal } from '../../lib/links';
+import { site } from '../../config/site';
+
+interface Props {
+  service: string;
+  stylist?: string;
+  consultation?: boolean;
+  class?: string;
+}
+
+const { service, stylist, consultation = false, class: className } = Astro.props;
+const href = bookingHref({ service, stylist });
+const label = consultation ? site.copy.services.consultationCta : site.copy.services.bookLabel;
+---
+
+<a
+  href={href}
+  {...externalAttrs(href)}
+  class:list={[
+    'group/book label-caps inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap text-accent no-underline',
+    className,
+  ]}
+>
+  <span class="link-line">{label}</span>
+  <span class="sr-only">: {service}{isExternal(href) && ` ${site.ui.newTabHint}`}</span>
+  <Icon name="arrow-right" size={16} class="transition-transform duration-300 ease-out-soft group-hover/book:translate-x-0.5" />
+</a>

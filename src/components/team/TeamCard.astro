@@ -1,0 +1,89 @@
+---
+import { Image, Picture } from 'astro:assets';
+import type { Stylist } from '../../lib/services';
+import { site } from '../../config/site';
+import { fill, firstName } from '../../lib/format';
+import { bookingHref } from '../../lib/booking';
+import { externalAttrs } from '../../lib/links';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  stylist: Stylist;
+  index?: number;
+  /** "full" adds years and quote (team page). */
+  variant?: 'compact' | 'full';
+  sizes?: string;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const {
+  stylist,
+  index = 0,
+  variant = 'compact',
+  sizes = '(min-width: 64rem) 22vw, 50vw',
+  headingLevel: Tag = 'h3',
+} = Astro.props;
+const t = stylist.data;
+const copy = site.copy.team;
+---
+
+<article class="reveal group relative" style={`--i:${index}`}>
+  <div class="frame relative aspect-square rounded-photo" transition:name={`stylist-${stylist.id}`}>
+    <Picture
+      src={t.photo}
+      alt={t.photoAlt}
+      widths={[320, 480, 720, 960]}
+      sizes={sizes}
+      formats={['avif', 'webp']}
+      loading="lazy"
+      class="absolute inset-0 size-full object-cover"
+     pictureAttributes={{ class: "contents" }}/>
+    <Picture
+      src={t.photo2}
+      alt=""
+      widths={[320, 480, 720, 960]}
+      sizes={sizes}
+      formats={['avif', 'webp']}
+      loading="lazy"
+      class="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-500 ease-out-soft can-hover:group-hover:opacity-100"
+     pictureAttributes={{ class: "contents" }}/>
+  </div>
+  <div class="mt-4">
+    <Tag class="text-h3">
+      <a href={`/equipo/${t.slug}`} class="text-ink no-underline after:absolute after:inset-0 hover:text-brand-strong">
+        {t.name}
+      </a>
+    </Tag>
+    <p class="mt-1 text-small text-muted">
+      {t.role}{variant === 'full' && <span class="nums"> · {fill(copy.years, { n: t.yearsOfExperience })}</span>}
+    </p>
+    <p class="mt-3 text-[0.875rem] text-ink">
+      <span class="sr-only">{copy.specialtiesLabel}: </span>
+      {t.specialties.join(' · ')}
+    </p>
+    {
+      variant === 'full' && (
+        <>
+          <blockquote class="font-display-soft mt-5 border-t border-line pt-5 text-[1.25rem] leading-snug italic">
+            “{t.quote}”
+          </blockquote>
+          <div class="relative z-10 mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+            <a href={`/equipo/${t.slug}`} class="label-caps inline-flex min-h-11 items-center gap-2 text-accent no-underline">
+              <span class="link-line">{copy.profileLabel}</span>
+              <Icon name="arrow-right" size={16} />
+            </a>
+            <a
+              href={bookingHref({ stylist: t.name })}
+              {...externalAttrs(bookingHref({ stylist: t.name }))}
+              class="label-caps inline-flex min-h-11 items-center gap-2 text-accent no-underline"
+            >
+              <span class="link-line">{fill(copy.bookWith, { name: firstName(t.name) })}</span>
+              <Icon name="arrow-up-right" size={16} />
+              <span class="sr-only">{site.ui.newTabHint}</span>
+            </a>
+          </div>
+        </>
+      )
+    }
+  </div>
+</article>

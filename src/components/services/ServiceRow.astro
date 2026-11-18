@@ -1,0 +1,68 @@
+---
+import type { Service, Stylist } from '../../lib/services';
+import { needsDeposit } from '../../lib/services';
+import { fill, firstName } from '../../lib/format';
+import { site } from '../../config/site';
+import PriceLine from './PriceLine.astro';
+import DurationLine from './DurationLine.astro';
+import BookLink from './BookLink.astro';
+import Badge from '../ui/Badge.astro';
+
+interface Props {
+  service: Service;
+  stylists: Stylist[];
+}
+
+const { service, stylists } = Astro.props;
+const s = service.data;
+const copy = site.copy.services;
+---
+
+<li
+  class="group/row -mx-4 border-t border-line px-4 py-6 transition-colors duration-300 ease-out-soft first:border-t-0 can-hover:hover:bg-paper md:-mx-6 md:px-6 md:py-7"
+>
+  <div class="flex items-baseline gap-3">
+    <h3 class="text-h3">{s.name}</h3>
+    <span aria-hidden="true" class="min-w-6 flex-1 -translate-y-1.5 border-b border-dotted border-muted/60"></span>
+    <PriceLine price={s.priceFrom} class="text-[1rem] md:text-[1.125rem]" />
+  </div>
+
+  <div class="mt-3 grid gap-4 md:grid-cols-12 md:gap-8">
+    <div class="md:col-span-8">
+      <p class="max-w-[58ch] text-muted">{s.description}</p>
+      {
+        (s.requiresConsultation || needsDeposit(service)) && (
+          <p class="mt-3 flex flex-wrap gap-2">
+            {s.requiresConsultation && <Badge>{copy.consultationLabel}</Badge>}
+            {needsDeposit(service) && (
+              <Badge tone="muted">{fill(copy.depositNote, { percent: site.commercial.deposit.percent })}</Badge>
+            )}
+          </p>
+        )
+      }
+      {
+        stylists.length > 0 && (
+          <p class="mt-3 text-[0.875rem] text-muted">
+            {copy.stylistsLabel}{' '}
+            {stylists.map((t, i) => (
+              <>
+                <a href={`/equipo/${t.data.slug}`} class="text-ink link-line">
+                  {firstName(t.data.name)}
+                </a>
+                {i < stylists.length - 1 && ', '}
+              </>
+            ))}
+          </p>
+        )
+      }
+    </div>
+    <div class="flex items-center justify-between gap-4 md:col-span-4 md:flex-col md:items-end md:justify-start">
+      <DurationLine duration={s.duration} class="text-[0.9375rem]" />
+      <BookLink
+        service={s.name}
+        consultation={s.requiresConsultation}
+        class="transition-opacity duration-300 ease-out-soft can-hover:opacity-0 can-hover:group-focus-within/row:opacity-100 can-hover:group-hover/row:opacity-100"
+      />
+    </div>
+  </div>
+</li>

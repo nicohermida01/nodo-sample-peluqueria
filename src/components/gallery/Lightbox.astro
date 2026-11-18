@@ -1,0 +1,313 @@
+---
+import { site } from '../../config/site';
+import Icon from '../ui/Icon.astro';
+
+const copy = site.copy.gallery;
+---
+
+<dialog
+  class="lightbox on-night m-0 h-dvh max-h-none w-full max-w-none bg-night p-0 text-on-night"
+  aria-labelledby="lightbox-title"
+  data-lightbox
+>
+  <div class="flex h-full flex-col">
+    <div class="container-wide flex h-16 shrink-0 items-center justify-between">
+      <p class="nums label-caps text-on-night/80" data-lb-counter></p>
+      <button
+        type="button"
+        class="-mr-2 inline-flex size-12 items-center justify-center rounded-button text-on-night hover:text-brand-on-night"
+        aria-label={copy.lightbox.close}
+        data-lb-close
+      >
+        <Icon name="x" size={26} />
+      </button>
+    </div>
+
+    <div class="relative flex min-h-0 flex-1 items-center justify-center px-4 [container-type:size] md:px-20" data-lb-stage>
+      <span hidden data-lb-img data-class="hidden h-auto rounded-photo [width:min(100cqw,calc(100cqh*var(--ratio,0.8)))]"></span>
+
+      <div
+        class="ba frame relative hidden aspect-(--ratio,0.8) touch-pan-y select-none rounded-photo [width:min(100cqw,calc(100cqh*var(--ratio,0.8)))]"
+        style="--pos:50%"
+        data-ba
+        data-ba-dynamic
+        data-before-label={copy.beforeLabel}
+        data-lb-compare
+      >
+        <span hidden data-lb-after data-class="block size-full object-cover"></span>
+        <div class="ba-before absolute inset-0">
+          <span hidden data-lb-before data-class="size-full object-cover"></span>
+        </div>
+        <span aria-hidden="true" class="label-caps absolute top-3 left-3 rounded-pill bg-ink px-2.5 py-1 text-[0.75rem] text-bg">
+          {copy.beforeLabel}
+        </span>
+        <span aria-hidden="true" class="label-caps absolute top-3 right-3 rounded-pill bg-paper px-2.5 py-1 text-[0.75rem] text-ink">
+          {copy.afterLabel}
+        </span>
+        <span aria-hidden="true" class="ba-handle pointer-events-none absolute inset-y-0 w-px bg-paper">
+          <span class="absolute top-1/2 left-1/2 inline-flex size-11 -translate-1/2 items-center justify-center rounded-pill border border-paper bg-accent text-on-accent">
+            <Icon name="chevrons-left-right" size={20} />
+          </span>
+        </span>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          value="50"
+          aria-label={copy.compareLabel}
+          class="ba-input pointer-events-none absolute inset-0 size-full opacity-0"
+          data-ba-input
+        />
+      </div>
+
+      <button
+        type="button"
+        class="absolute top-1/2 left-2 hidden size-12 -translate-y-1/2 items-center justify-center rounded-pill border border-on-night/30 text-on-night transition-colors hover:border-on-night hover:bg-on-night hover:text-night md:inline-flex"
+        aria-label={copy.lightbox.prev}
+        data-lb-prev
+      >
+        <Icon name="arrow-left" size={22} />
+      </button>
+      <button
+        type="button"
+        class="absolute top-1/2 right-2 hidden size-12 -translate-y-1/2 items-center justify-center rounded-pill border border-on-night/30 text-on-night transition-colors hover:border-on-night hover:bg-on-night hover:text-night md:inline-flex"
+        aria-label={copy.lightbox.next}
+        data-lb-next
+      >
+        <Icon name="arrow-right" size={22} />
+      </button>
+    </div>
+
+    <div class="container-wide shrink-0 py-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] md:py-7">
+      <div class="flex items-end justify-between gap-6">
+        <div class="min-w-0">
+          <h2 id="lightbox-title" class="text-h3" data-lb-title></h2>
+          <p class="mt-1 line-clamp-2 max-w-[70ch] text-small text-on-night/80" data-lb-caption></p>
+          <p class="mt-2 text-small">
+            <span class="label-caps text-brand-on-night" data-lb-category></span>
+            <span data-lb-by>
+              <span class="text-on-night/60"> · {copy.byLabel} </span>
+              <a href="#" class="text-on-night link-line" data-lb-stylist></a>
+            </span>
+            <span class="text-on-night/80" data-lb-service></span>
+          </p>
+        </div>
+        <div class="flex shrink-0 gap-2 md:hidden">
+          <button
+            type="button"
+            class="inline-flex size-12 items-center justify-center rounded-pill border border-on-night/30 text-on-night"
+            aria-label={copy.lightbox.prev}
+            data-lb-prev
+          >
+            <Icon name="arrow-left" size={22} />
+          </button>
+          <button
+            type="button"
+            class="inline-flex size-12 items-center justify-center rounded-pill border border-on-night/30 text-on-night"
+            aria-label={copy.lightbox.next}
+            data-lb-next
+          >
+            <Icon name="arrow-right" size={22} />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .lightbox::backdrop {
+    background: var(--color-night);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .lightbox[open] {
+      animation: lb-in 300ms var(--ease-out-soft);
+    }
+    .lightbox [data-lb-stage] > :global(.is-entering) {
+      animation: lb-img-in 380ms var(--ease-out-soft);
+    }
+  }
+  @keyframes lb-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes lb-img-in {
+    from {
+      opacity: 0;
+      transform: scale(0.985);
+    }
+  }
+</style>
+
+<script>
+  import { bindCompare, setCompareValue } from '../../scripts/compare';
+
+  let controller: AbortController | undefined;
+
+  function setupLightbox() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+      const dialog = root.querySelector<HTMLDialogElement>('[data-lightbox]');
+      if (!dialog) return;
+      const $ = <T extends Element>(sel: string) => dialog.querySelector<T>(sel)!;
+      // Images are created on demand so the markup never ships an <img> without src.
+      const makeImg = (slot: HTMLElement) => {
+        const el = document.createElement('img');
+        el.className = slot.dataset.class ?? '';
+        el.sizes = '(min-width: 64rem) 60vw, 100vw';
+        el.draggable = false;
+        el.decoding = 'async';
+        slot.replaceWith(el);
+        return el;
+      };
+      const img = makeImg($<HTMLElement>('[data-lb-img]'));
+      const compare = $<HTMLElement>('[data-lb-compare]');
+      const afterImg = makeImg($<HTMLElement>('[data-lb-after]'));
+      const beforeImg = makeImg($<HTMLElement>('[data-lb-before]'));
+      const title = $<HTMLElement>('[data-lb-title]');
+      const caption = $<HTMLElement>('[data-lb-caption]');
+      const category = $<HTMLElement>('[data-lb-category]');
+      const by = $<HTMLElement>('[data-lb-by]');
+      const stylist = $<HTMLAnchorElement>('[data-lb-stylist]');
+      const service = $<HTMLElement>('[data-lb-service]');
+      const counter = $<HTMLElement>('[data-lb-counter]');
+      const stage = $<HTMLElement>('[data-lb-stage]');
+
+      bindCompare(compare, signal);
+
+      let opener: HTMLButtonElement | null = null;
+      let current: HTMLButtonElement | null = null;
+
+      const visibleOpeners = () =>
+        Array.from(root.querySelectorAll<HTMLButtonElement>('[data-lightbox-open]')).filter(
+          (b) => !b.closest<HTMLElement>('[data-work]')?.hidden,
+        );
+
+      const setImage = (el: HTMLImageElement, src: string, srcset: string, alt: string, w: string, h: string) => {
+        el.srcset = srcset;
+        el.src = src;
+        el.alt = alt;
+        el.width = Number(w);
+        el.height = Number(h);
+      };
+
+      const show = (button: HTMLButtonElement) => {
+        current = button;
+        const d = button.dataset;
+        stage.style.setProperty('--ratio', String(Number(d.width) / Number(d.height)));
+        const hasBefore = Boolean(d.beforeSrc);
+        const shown = hasBefore ? compare : img;
+        const hidden = hasBefore ? img : compare;
+        hidden.classList.add('hidden');
+        shown.classList.remove('hidden');
+        if (hasBefore) {
+          setImage(afterImg, d.src!, d.srcset!, d.alt!, d.width!, d.height!);
+          setImage(beforeImg, d.beforeSrc!, d.beforeSrcset ?? '', d.beforeAlt ?? '', d.width!, d.height!);
+          setCompareValue(compare, 50);
+        } else {
+          setImage(img, d.src!, d.srcset!, d.alt!, d.width!, d.height!);
+        }
+        shown.classList.remove('is-entering');
+        void shown.offsetWidth;
+        shown.classList.add('is-entering');
+
+        title.textContent = d.title ?? '';
+        caption.textContent = d.alt ?? '';
+        category.textContent = d.categoryLabel ?? '';
+        by.hidden = !d.stylistName;
+        stylist.textContent = d.stylistName ?? '';
+        stylist.href = d.stylistHref || '#';
+        service.textContent = d.service ? ` · ${d.service}` : '';
+
+        const list = visibleOpeners();
+        counter.textContent = `${list.indexOf(button) + 1} / ${list.length}`;
+      };
+
+      const step = (delta: number) => {
+        const list = visibleOpeners();
+        if (!current || list.length < 2) return;
+        const index = list.indexOf(current);
+        show(list[(index + delta + list.length) % list.length]!);
+      };
+
+      root.querySelectorAll<HTMLButtonElement>('[data-lightbox-open]').forEach((button) =>
+        button.addEventListener(
+          'click',
+          () => {
+            opener = button;
+            show(button);
+            dialog.showModal();
+            document.documentElement.style.overflow = 'hidden';
+          },
+          { signal },
+        ),
+      );
+
+      dialog.querySelector('[data-lb-close]')?.addEventListener('click', () => dialog.close(), { signal });
+      dialog.querySelectorAll('[data-lb-prev]').forEach((b) => b.addEventListener('click', () => step(-1), { signal }));
+      dialog.querySelectorAll('[data-lb-next]').forEach((b) => b.addEventListener('click', () => step(1), { signal }));
+
+      dialog.addEventListener(
+        'keydown',
+        (event) => {
+          if ((event.target as HTMLElement).matches('[data-ba-input]')) return;
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            step(-1);
+          } else if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            step(1);
+          }
+        },
+        { signal },
+      );
+
+      dialog.addEventListener(
+        'close',
+        () => {
+          document.documentElement.style.overflow = '';
+          (opener ?? current)?.focus();
+        },
+        { signal },
+      );
+
+      // Swipe between works on touch (ignored on the comparator, which owns horizontal drags).
+      let startX = 0;
+      let startY = 0;
+      let tracking = false;
+      stage.addEventListener(
+        'pointerdown',
+        (event) => {
+          if (event.pointerType === 'mouse' || (event.target as HTMLElement).closest('[data-ba]')) return;
+          tracking = true;
+          startX = event.clientX;
+          startY = event.clientY;
+        },
+        { signal },
+      );
+      stage.addEventListener(
+        'pointerup',
+        (event) => {
+          if (!tracking) return;
+          tracking = false;
+          const dx = event.clientX - startX;
+          const dy = event.clientY - startY;
+          if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4) step(dx < 0 ? 1 : -1);
+        },
+        { signal },
+      );
+      stage.addEventListener('pointercancel', () => (tracking = false), { signal });
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupLightbox);
+  document.addEventListener('astro:before-swap', () => {
+    controller?.abort();
+    document.documentElement.style.overflow = '';
+  });
+</script>

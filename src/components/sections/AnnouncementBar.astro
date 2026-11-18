@@ -1,0 +1,23 @@
+---
+import { site } from '../../config/site';
+import Icon from '../ui/Icon.astro';
+
+const promo = site.commercial.promos.find((p) => p.active && p.announce);
+---
+
+{
+  promo && (
+    <div class="bg-ink text-bg">
+      <p class="container-wide flex min-h-10 flex-wrap items-center justify-center gap-x-3 gap-y-1 py-2 text-center text-[0.8125rem] leading-snug">
+        <span>{promo.title}</span>
+        <a
+          href="/#promos"
+          class="label-caps link-line inline-flex min-h-6 items-center gap-1.5 text-[0.75rem] text-bg"
+        >
+          {site.ui.announcementLink}
+          <Icon name="arrow-right" size={14} />
+        </a>
+      </p>
+    </div>
+  )
+}

@@ -1,0 +1,76 @@
+---
+import { Picture } from 'astro:assets';
+import { site } from '../../config/site';
+import { bookingHref, whatsappHref } from '../../lib/booking';
+import type { CategoryGroup } from '../../lib/services';
+import Headline from '../ui/Headline.astro';
+import Button from '../ui/Button.astro';
+import CartaSwitcher from '../services/CartaSwitcher.astro';
+
+interface Props {
+  groups: CategoryGroup[];
+}
+
+const { groups } = Astro.props;
+const hero = site.copy.hero;
+// The tall 4:5 frame is used at every size; the 16:9 desktop asset feeds Open Graph.
+const photo = hero.media.mobile;
+---
+
+<!--
+  Desktop: text + carta on the left 5/12, photo on the right 7/12 bleeding to the top and
+  right edge, pulled up under the (transparent) header. Mobile: photo first, text panel overlaps it.
+-->
+<section
+  class="relative bg-bg lg:-mt-(--header-h) lg:grid lg:min-h-[min(100svh,60rem)] lg:grid-cols-12"
+  aria-labelledby="hero-title"
+  data-hero
+>
+  <div
+    class="hero-photo frame relative aspect-4/5 max-h-[min(78svh,48rem)] w-full lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:aspect-auto lg:max-h-none lg:bg-transparent"
+  >
+    <Picture
+      src={photo.src}
+      alt={photo.alt}
+      formats={['avif', 'webp']}
+      widths={[480, 720, 960, 1200]}
+      sizes="(min-width: 64rem) 58vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 size-full object-cover"
+    />
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 hidden h-[calc(var(--header-h)+3.5rem)] bg-linear-to-b from-bg via-bg/80 to-transparent lg:block"
+    ></span>
+  </div>
+
+  <div
+    class="relative z-10 -mt-24 mx-3 rounded-t-photo bg-bg px-4 pt-7 pb-12 sm:mx-6 sm:px-6 lg:col-span-5 lg:col-start-1 lg:row-start-1 lg:m-0 lg:flex lg:flex-col lg:justify-center lg:rounded-none lg:pt-[calc(var(--header-h)+0.75rem)] lg:pr-6 lg:pb-8 lg:pl-[max(2rem,calc((100vw-90rem)/2+2rem))] xl:pr-10"
+  >
+    <h1 id="hero-title" class="text-hero max-w-[13ch]">
+      <Headline text={hero.title} words />
+    </h1>
+    <p class="mt-3 max-w-[44ch] text-muted">{hero.lead}</p>
+
+    <CartaSwitcher groups={groups} class="mt-5" compact />
+
+    <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-nowrap">
+      <Button href={bookingHref()} class="lg:px-3.5">{site.booking.ctaLabel}</Button>
+      <Button href={whatsappHref()} variant="secondary" icon="message" iconStart class="lg:px-3.5">
+        {site.booking.secondaryCtaLabel}
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Fade the photo toward the cream ground on its left edge (desktop only). */
+  @media (min-width: 64rem) {
+    .hero-photo {
+      -webkit-mask-image: linear-gradient(to right, transparent, black 22%);
+      mask-image: linear-gradient(to right, transparent, black 22%);
+    }
+  }
+</style>

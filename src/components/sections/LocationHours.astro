@@ -1,0 +1,76 @@
+---
+import { site } from '../../config/site';
+import { whatsappHref } from '../../lib/booking';
+import { externalAttrs } from '../../lib/links';
+import SectionHeading from '../ui/SectionHeading.astro';
+import MapFacade from '../ui/MapFacade.astro';
+import Icon from '../ui/Icon.astro';
+
+const copy = site.copy.location;
+const { address, contact, social } = site;
+const contacts = [
+  { icon: 'message' as const, label: 'WhatsApp', href: whatsappHref() },
+  { icon: 'phone' as const, label: contact.phone, href: `tel:+${contact.whatsapp}` },
+  { icon: 'mail' as const, label: contact.email, href: `mailto:${contact.email}` },
+  { icon: 'instagram' as const, label: social.instagram.handle, href: social.instagram.url },
+];
+---
+
+<section id="contacto" class="section-y bg-bg" aria-labelledby="contacto-title">
+  <div class="container-site grid gap-12 lg:grid-cols-12 lg:gap-8">
+    <div class="lg:col-span-5">
+      <SectionHeading id="contacto-title" title={copy.title} />
+
+      <div class="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-1">
+        <div class="reveal">
+          <h3 class="label-caps font-sans text-brand-strong">{copy.addressTitle}</h3>
+          <address class="mt-3 not-italic">
+            <p class="font-display-soft text-h3">{address.street}</p>
+            <p class="mt-1 text-muted">{address.neighborhood}, {address.city}</p>
+          </address>
+        </div>
+
+        <div class="reveal" style="--i:1">
+          <h3 class="label-caps font-sans text-brand-strong">{copy.hoursTitle}</h3>
+          <dl class="mt-3 divide-y divide-line border-y border-line">
+            {
+              site.hours.map((h) => (
+                <div class="flex items-baseline justify-between gap-4 py-3">
+                  <dt>{h.label}</dt>
+                  <dd class:list={['nums', !h.opens && 'text-muted']}>
+                    {h.opens ? `${h.opens} – ${h.closes}` : copy.closedLabel}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <div class="reveal sm:col-span-2 lg:col-span-1" style="--i:2">
+          <h3 class="label-caps font-sans text-brand-strong">{copy.contactTitle}</h3>
+          <ul class="mt-3 grid gap-1 sm:grid-cols-2 lg:grid-cols-1">
+            {
+              contacts.map((c) => (
+                <li>
+                  <a
+                    href={c.href}
+                    {...externalAttrs(c.href)}
+                    class="inline-flex min-h-11 items-center gap-3 break-all text-ink link-line"
+                  >
+                    <Icon name={c.icon} size={20} class="text-brand" />
+                    <span class="nums">{c.label}</span>
+                    {c.href.startsWith('http') && <span class="sr-only">{site.ui.newTabHint}</span>}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal lg:col-span-7">
+      <MapFacade />
+    </div>
+  </div>
+</section>

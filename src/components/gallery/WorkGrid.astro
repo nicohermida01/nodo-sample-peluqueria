@@ -1,0 +1,208 @@
+---
+import { Image, Picture } from 'astro:assets';
+import type { WorkView } from '../../lib/gallery';
+import type { Stylist } from '../../lib/services';
+import { WORK_CATEGORY_LABELS, type WorkCategory } from '../../lib/services';
+import { WORK_CATEGORIES } from '../../content.config';
+import { site } from '../../config/site';
+import { fill, firstName } from '../../lib/format';
+import Icon from '../ui/Icon.astro';
+import Lightbox from './Lightbox.astro';
+
+interface Props {
+  items: WorkView[];
+  /** Stylists offered as filters. Omit to hide the filter bar. */
+  filterStylists?: Stylist[];
+  columns?: 'default' | 'narrow';
+}
+
+const { items, filterStylists, columns = 'default' } = Astro.props;
+const copy = site.copy.gallery;
+const showFilters = Boolean(filterStylists);
+const categories = WORK_CATEGORIES.filter((c) => items.some((i) => i.work.data.category === c)) as WorkCategory[];
+const count = (n: number) => fill(n === 1 ? copy.countOne : copy.countOther, { n });
+---
+
+<div
+  data-gallery
+  data-count-one={copy.countOne}
+  data-count-other={copy.countOther}
+>
+  {
+    showFilters && (
+      <div class="mb-10 grid gap-6 border-y border-line py-6 md:mb-14 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div class="grid gap-5 md:grid-cols-2 md:gap-10">
+          <div role="group" aria-labelledby="filter-category-label">
+            <p id="filter-category-label" class="label-caps text-brand-strong">{copy.filterCategory}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              {['all', ...categories].map((value) => (
+                <button
+                  type="button"
+                  aria-pressed={value === 'all' ? 'true' : 'false'}
+                  data-filter="category"
+                  data-value={value}
+                  class="inline-flex min-h-11 items-center rounded-pill border border-line px-4 text-[0.9375rem] font-semibold text-ink transition-colors hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-on-accent"
+                >
+                  {value === 'all' ? copy.allLabel : WORK_CATEGORY_LABELS[value as WorkCategory]}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div role="group" aria-labelledby="filter-stylist-label">
+            <p id="filter-stylist-label" class="label-caps text-brand-strong">{copy.filterStylist}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              {[{ id: 'all', label: copy.allLabel }, ...filterStylists!.map((t) => ({ id: t.id, label: firstName(t.data.name) }))].map(
+                (opt) => (
+                  <button
+                    type="button"
+                    aria-pressed={opt.id === 'all' ? 'true' : 'false'}
+                    data-filter="stylist"
+                    data-value={opt.id}
+                    class="inline-flex min-h-11 items-center rounded-pill border border-line px-4 text-[0.9375rem] font-semibold text-ink transition-colors hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-on-accent"
+                  >
+                    {opt.label}
+                  </button>
+                ),
+              )}
+            </div>
+          </div>
+        </div>
+        <p class="nums text-small text-muted lg:text-right" aria-live="polite" data-count>
+          {count(items.length)}
+        </p>
+      </div>
+    )
+  }
+
+  <p class="hidden py-16 text-center text-muted" data-empty>{copy.empty}</p>
+
+  <ul
+    class:list={[
+      'gap-4 md:gap-6',
+      columns === 'default' ? 'columns-2 md:columns-3 xl:columns-4' : 'columns-2 md:columns-3',
+    ]}
+  >
+    {
+      items.map((item, i) => {
+        const d = item.work.data;
+        const stylistName = item.stylist ? firstName(item.stylist.data.name) : '';
+        return (
+          <li
+            class="mb-4 break-inside-avoid md:mb-6"
+            data-work
+            data-category={d.category}
+            data-stylist={d.stylist.id}
+          >
+            <button
+              type="button"
+              class="group block w-full cursor-zoom-in text-left"
+              aria-haspopup="dialog"
+              data-lightbox-open
+              data-index={i}
+              data-title={d.title}
+              data-category-label={item.categoryLabel}
+              data-stylist-name={item.stylist?.data.name ?? ''}
+              data-stylist-href={item.stylist ? `/equipo/${item.stylist.data.slug}` : ''}
+              data-service={item.service?.data.name ?? ''}
+              data-src={item.large.src}
+              data-srcset={item.large.srcset}
+              data-width={item.large.width}
+              data-height={item.large.height}
+              data-alt={item.large.alt}
+              data-before-src={item.before?.src}
+              data-before-srcset={item.before?.srcset}
+              data-before-alt={item.before?.alt}
+            >
+              <span class="frame relative block rounded-photo">
+                <Picture
+                  src={d.image}
+                  alt={d.alt}
+                  widths={[320, 480, 640, 900]}
+                  sizes={
+                    columns === 'default'
+                      ? '(min-width: 80rem) 22vw, (min-width: 48rem) 31vw, 48vw'
+                      : '(min-width: 48rem) 28vw, 48vw'
+                  }
+                  formats={['avif', 'webp']}
+                  loading={i < 4 ? 'eager' : 'lazy'}
+                  class="block h-auto w-full transition-transform duration-700 ease-out-soft can-hover:group-hover:scale-[1.03]"
+                 pictureAttributes={{ class: "contents" }}/>
+                {d.before && (
+                  <span class="label-caps absolute top-3 left-3 rounded-pill bg-paper px-2.5 py-1 text-[0.75rem] text-ink">
+                    {copy.beforeLabel} / {copy.afterLabel}
+                  </span>
+                )}
+                <span class="absolute inset-x-3 bottom-3 hidden items-center justify-between gap-2 rounded-button bg-paper px-3 py-2 text-[0.8125rem] text-ink opacity-0 transition-opacity duration-300 ease-out-soft can-hover:flex can-hover:group-hover:opacity-100 can-hover:group-focus-visible:opacity-100">
+                  <span class="truncate">
+                    <span class="label-caps text-[0.75rem] text-brand-strong">{item.categoryLabel}</span>
+                    <span class="text-muted"> · {stylistName}</span>
+                  </span>
+                  <Icon name="expand" size={16} class="text-accent" />
+                </span>
+              </span>
+              <span class="mt-2 block text-[0.875rem] leading-snug text-ink">
+                {d.title}
+                <span class="block text-[0.8125rem] text-muted can-hover:hidden">
+                  {item.categoryLabel} · {stylistName}
+                </span>
+              </span>
+              <span class="sr-only">{copy.openLabel}</span>
+            </button>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <Lightbox />
+</div>
+
+<script>
+  let controller: AbortController | undefined;
+
+  function setupFilters() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+      const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+      if (!buttons.length) return;
+      const works = Array.from(root.querySelectorAll<HTMLElement>('[data-work]'));
+      const countEl = root.querySelector<HTMLElement>('[data-count]');
+      const empty = root.querySelector<HTMLElement>('[data-empty]');
+      const state: Record<string, string> = { category: 'all', stylist: 'all' };
+
+      const apply = () => {
+        let shown = 0;
+        works.forEach((el) => {
+          const match =
+            (state.category === 'all' || el.dataset.category === state.category) &&
+            (state.stylist === 'all' || el.dataset.stylist === state.stylist);
+          el.hidden = !match;
+          if (match) shown++;
+        });
+        const template = shown === 1 ? root.dataset.countOne : root.dataset.countOther;
+        if (countEl && template) countEl.textContent = template.replaceAll('{n}', String(shown));
+        empty?.classList.toggle('hidden', shown > 0);
+      };
+
+      buttons.forEach((button) =>
+        button.addEventListener(
+          'click',
+          () => {
+            const group = button.dataset.filter!;
+            state[group] = button.dataset.value ?? 'all';
+            buttons
+              .filter((b) => b.dataset.filter === group)
+              .forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+            apply();
+          },
+          { signal },
+        ),
+      );
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupFilters);
+</script>

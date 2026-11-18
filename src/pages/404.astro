@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Headline from '../components/ui/Headline.astro';
+import Button from '../components/ui/Button.astro';
+import { site } from '../config/site';
+
+const copy = site.copy.notFound;
+---
+
+<BaseLayout title={site.pages.notFound.title} description={site.pages.notFound.description} noindex>
+  <section class="bg-bg py-24 md:py-40">
+    <div class="container-site">
+      <h1 class="text-display max-w-[14ch]">
+        <Headline text={copy.title} words />
+      </h1>
+      <p class="mt-6 max-w-[48ch] text-muted">{copy.lead}</p>
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+        <Button href="/" icon="arrow-right">{copy.homeLabel}</Button>
+        <Button href="/servicios" variant="secondary">{copy.servicesLabel}</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

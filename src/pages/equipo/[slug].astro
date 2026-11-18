@@ -1,0 +1,174 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image, Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Headline from '../../components/ui/Headline.astro';
+import Button from '../../components/ui/Button.astro';
+import Icon from '../../components/ui/Icon.astro';
+import CartaRow from '../../components/services/CartaRow.astro';
+import WorkGrid from '../../components/gallery/WorkGrid.astro';
+import TeamCard from '../../components/team/TeamCard.astro';
+import { site } from '../../config/site';
+import { bookingHref } from '../../lib/booking';
+import { externalAttrs } from '../../lib/links';
+import { fill, firstName } from '../../lib/format';
+import { CATEGORY_LABELS, getServices, getTeam, getWorks, groupByCategory, servicesOf } from '../../lib/services';
+import type { Stylist } from '../../lib/services';
+import { buildWorkViews } from '../../lib/gallery';
+
+export const getStaticPaths = (async () => {
+  const team = await getTeam();
+  return team.map((stylist) => ({ params: { slug: stylist.data.slug }, props: { stylist } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  stylist: Stylist;
+}
+
+const { stylist } = Astro.props;
+const t = stylist.data;
+const copy = site.copy.team;
+const name = firstName(t.name);
+
+const [services, team, works] = await Promise.all([getServices(), getTeam(), getWorks()]);
+const theirServices = servicesOf(stylist, services);
+const signatureIds = new Set(t.signatureServices.map((ref) => ref.id));
+const signature = services.filter((s) => signatureIds.has(s.id));
+const otherGroups = groupByCategory(theirServices.filter((s) => !signatureIds.has(s.id)));
+const theirWorks = await buildWorkViews(
+  works.filter((w) => w.data.stylist.id === stylist.id),
+  team,
+  services,
+);
+const others = team.filter((m) => m.id !== stylist.id);
+const bookHref = bookingHref({ stylist: t.name });
+---
+
+<BaseLayout title={`${t.name}, ${t.role.toLowerCase()}`} description={t.bio} image={t.photo} imageAlt={t.photoAlt}>
+  <section class="bg-bg pt-8 pb-16 md:pt-14 md:pb-24" aria-labelledby="perfil-title">
+    <div class="container-site">
+      <a href="/equipo" class="label-caps inline-flex min-h-11 items-center gap-2 text-muted no-underline hover:text-ink">
+        <Icon name="arrow-left" size={16} />
+        <span class="link-line">{copy.backLabel}</span>
+      </a>
+
+      <div class="mt-6 grid gap-10 md:mt-10 md:grid-cols-12 md:gap-8">
+        <div class="md:col-span-5">
+          <div class="frame rounded-arch aspect-4/5 w-full" transition:name={`stylist-${stylist.id}`}>
+            <Picture
+              src={t.photo}
+              alt={t.photoAlt}
+              widths={[480, 720, 960, 1200]}
+              sizes="(min-width: 48rem) 40vw, 92vw"
+              formats={['avif', 'webp']}
+              loading="eager"
+              fetchpriority="high"
+              class="size-full object-cover"
+             pictureAttributes={{ class: "contents" }}/>
+          </div>
+        </div>
+
+        <div class="md:col-span-6 md:col-start-7 md:self-center">
+          <h1 id="perfil-title" class="text-display">
+            <Headline text={t.name} words />
+          </h1>
+          <p class="nums mt-4 text-muted">
+            {t.role} · {fill(copy.years, { n: t.yearsOfExperience })}
+          </p>
+          <blockquote class="font-display-soft mt-8 max-w-[28ch] text-[clamp(1.375rem,1.2rem+0.9vw,2rem)] leading-snug text-brand-strong italic">
+            “{t.quote}”
+          </blockquote>
+          <p class="mt-8 max-w-[56ch]">{t.bio}</p>
+          <div class="mt-8">
+            <h2 class="label-caps font-sans text-brand-strong">{copy.specialtiesLabel}</h2>
+            <ul class="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-ink">
+              {t.specialties.map((sp, i) => (
+                <li class="flex items-center gap-3">
+                  {i > 0 && <span aria-hidden="true" class="h-4 w-px bg-line" />}
+                  {sp}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <Button href={bookHref}>{fill(copy.bookWith, { name })}</Button>
+            <a
+              href={t.instagram.url}
+              {...externalAttrs(t.instagram.url)}
+              class="inline-flex min-h-12 items-center gap-2 px-1 text-ink link-line"
+            >
+              <Icon name="instagram" size={20} class="text-brand-strong" />
+              {t.instagram.handle}
+              <span class="sr-only">{site.ui.newTabHint}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-surface" aria-labelledby="firma-title">
+    <div class="container-site grid gap-10 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-4">
+        <h2 id="firma-title" class="reveal text-h2 max-w-[14ch]"><Headline text={copy.signatureTitle} /></h2>
+        <p class="reveal mt-5 max-w-[40ch] text-muted">{site.copy.services.lead}</p>
+      </div>
+      <div class="lg:col-span-8">
+        <ul class="reveal rounded-photo border border-line bg-paper px-5 py-2 md:px-8">
+          {signature.map((service) => <CartaRow service={service} stylist={t.name} />)}
+        </ul>
+
+        {
+          otherGroups.length > 0 && (
+            <div class="mt-14">
+              <h2 class="reveal text-h3">{copy.allServicesTitle}</h2>
+              <div class="mt-6 grid gap-x-10 gap-y-8 md:grid-cols-2">
+                {otherGroups.map((g) => (
+                  <div class="reveal">
+                    <h3 class="label-caps font-sans text-brand-strong">{CATEGORY_LABELS[g.category]}</h3>
+                    <ul class="mt-2">
+                      {g.services.map((service) => (
+                        <CartaRow service={service} stylist={t.name} headingLevel="h4" />
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    theirWorks.length > 0 && (
+      <section class="section-y bg-bg" aria-labelledby="trabajos-title">
+        <div class="container-site">
+          <div class="mb-10 flex flex-col gap-4 md:mb-14 md:flex-row md:items-end md:justify-between">
+            <h2 id="trabajos-title" class="reveal text-h2">
+              {copy.worksTitle}
+            </h2>
+            <a href="/galeria" class="label-caps inline-flex min-h-11 items-center gap-2 text-accent no-underline">
+              <span class="link-line">{site.copy.gallery.seeAll}</span>
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+          <WorkGrid items={theirWorks} columns="narrow" />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section-y border-t border-line bg-bg" aria-labelledby="otros-title">
+    <div class="container-site">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <h2 id="otros-title" class="reveal text-h2">{copy.othersTitle}</h2>
+        <Button href={bookHref} variant="secondary">{fill(copy.bookWith, { name })}</Button>
+      </div>
+      <div class="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-8">
+        {others.map((member, i) => <TeamCard stylist={member} index={i} sizes="(min-width: 48rem) 30vw, 46vw" />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

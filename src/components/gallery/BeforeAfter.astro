@@ -1,0 +1,101 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image, Picture } from 'astro:assets';
+import { site } from '../../config/site';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  after: ImageMetadata;
+  afterAlt: string;
+  before: ImageMetadata;
+  beforeAlt: string;
+  sizes: string;
+  widths?: number[];
+  class?: string;
+  start?: number;
+}
+
+const {
+  after,
+  afterAlt,
+  before,
+  beforeAlt,
+  sizes,
+  widths = [480, 720, 960, 1200],
+  class: className,
+  start = 50,
+} = Astro.props;
+const copy = site.copy.gallery;
+---
+
+<div
+  class:list={['ba frame relative touch-pan-y select-none rounded-photo', className]}
+  style={`--pos:${start}%`}
+  data-ba
+  data-before-label={copy.beforeLabel}
+>
+  <Picture
+    src={after}
+    alt={afterAlt}
+    widths={widths}
+    sizes={sizes}
+    formats={['avif', 'webp']}
+    loading="lazy"
+    draggable="false"
+    class="block h-auto w-full"
+   pictureAttributes={{ class: "contents" }}/>
+  <div class="ba-before absolute inset-0">
+    <Picture
+      src={before}
+      alt={beforeAlt}
+      widths={widths}
+      sizes={sizes}
+      formats={['avif', 'webp']}
+      loading="lazy"
+      draggable="false"
+      class="size-full object-cover"
+     pictureAttributes={{ class: "contents" }}/>
+  </div>
+
+  <span aria-hidden="true" class="label-caps absolute top-3 left-3 rounded-pill bg-ink px-2.5 py-1 text-[0.75rem] text-bg">
+    {copy.beforeLabel}
+  </span>
+  <span aria-hidden="true" class="label-caps absolute top-3 right-3 rounded-pill bg-paper px-2.5 py-1 text-[0.75rem] text-ink">
+    {copy.afterLabel}
+  </span>
+
+  <span aria-hidden="true" class="ba-handle pointer-events-none absolute inset-y-0 w-px bg-paper">
+    <span class="absolute top-1/2 left-1/2 inline-flex size-11 -translate-1/2 items-center justify-center rounded-pill border border-paper bg-accent text-on-accent">
+      <Icon name="chevrons-left-right" size={20} />
+    </span>
+  </span>
+
+  <input
+    type="range"
+    min="0"
+    max="100"
+    step="1"
+    value={start}
+    aria-label={copy.compareLabel}
+    aria-valuetext={`${copy.beforeLabel} ${start}%`}
+    class="ba-input pointer-events-none absolute inset-0 size-full opacity-0"
+    data-ba-input
+  />
+</div>
+
+<script>
+  import { bindCompare } from '../../scripts/compare';
+
+  let controller: AbortController | undefined;
+
+  function setupCompare() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+    document
+      .querySelectorAll<HTMLElement>('[data-ba]:not([data-ba-dynamic])')
+      .forEach((root) => bindCompare(root, signal));
+  }
+
+  document.addEventListener('astro:page-load', setupCompare);
+</script>

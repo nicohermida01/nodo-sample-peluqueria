@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/ui/PageIntro.astro';
+import TeamCard from '../../components/team/TeamCard.astro';
+import FinalCta from '../../components/sections/FinalCta.astro';
+import { Image, Picture } from 'astro:assets';
+import { site } from '../../config/site';
+import { getTeam } from '../../lib/services';
+
+const team = await getTeam();
+const page = site.pages.team;
+const arch = site.copy.salon.archPhoto;
+---
+
+<BaseLayout title={page.title} description={page.description} image={team[0]?.data.photo} imageAlt={team[0]?.data.photoAlt}>
+  <PageIntro title={page.heading} lead={site.copy.team.lead} />
+  <section class="bg-surface pt-12 pb-20 md:pt-16 md:pb-28" aria-label={page.title}>
+    <div class="container-site grid gap-x-8 gap-y-16 lg:grid-cols-3">
+      <!-- The page's arch bridges the cream intro into the sand band and stays beside the grid. -->
+      <div class="-mb-4 ml-auto w-3/5 max-w-sm lg:col-start-3 lg:row-start-1 lg:mb-0 lg:w-auto lg:max-w-none">
+        <div class="frame rounded-arch -mt-28 aspect-3/4 md:-mt-36 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:-mt-44">
+          <Picture
+            src={arch.src}
+            alt={arch.alt}
+            widths={[320, 480, 640, 900]}
+            sizes="(min-width: 80rem) 24rem, (min-width: 64rem) 30vw, (min-width: 40rem) 24rem, 60vw"
+            formats={['avif', 'webp']}
+            loading="eager"
+            class="size-full object-cover"
+           pictureAttributes={{ class: "contents" }}/>
+        </div>
+      </div>
+      <div class="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:col-span-2 lg:col-start-1 lg:row-start-1">
+      {
+        team.map((stylist, i) => (
+          <TeamCard
+            stylist={stylist}
+            index={i % 2}
+            variant="full"
+            headingLevel="h2"
+            sizes="(min-width: 80rem) 24rem, (min-width: 64rem) 30vw, (min-width: 40rem) 46vw, 92vw"
+          />
+        ))
+      }
+      </div>
+    </div>
+  </section>
+  <FinalCta />
+</BaseLayout>

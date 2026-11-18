@@ -1,0 +1,30 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site } from '../config/site';
+
+const { privacy } = site.legal;
+---
+
+<LegalLayout
+  title={privacy.title}
+  seoTitle={site.pages.privacy.title}
+  description={site.pages.privacy.description}
+  lead={privacy.lead}
+>
+  {
+    privacy.sections.map((section) => (
+      <section>
+        <h2>{section.heading}</h2>
+        {section.paragraphs.map((p) => <p>{p}</p>)}
+      </section>
+    ))
+  }
+  <section>
+    <h2>{site.copy.location.contactTitle}</h2>
+    <p>
+      <a href={`mailto:${site.contact.email}`} class="link-line text-ink">{site.contact.email}</a>
+      <br />
+      <span class="nums">{site.contact.phone}</span>
+    </p>
+  </section>
+</LegalLayout>

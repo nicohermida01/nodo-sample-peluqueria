@@ -1,0 +1,68 @@
+---
+import { site } from '../../config/site';
+import type { Stylist, Work } from '../../lib/services';
+import { firstName } from '../../lib/format';
+import SectionHeading from '../ui/SectionHeading.astro';
+import BeforeAfter from '../gallery/BeforeAfter.astro';
+import WorkFigure from '../gallery/WorkFigure.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  works: Work[];
+  team: Stylist[];
+}
+
+const { works, team } = Astro.props;
+const copy = site.copy.gallery;
+const featured = works.filter((w) => w.data.featured);
+const pair = featured.find((w) => w.data.before) ?? works.find((w) => w.data.before);
+const mosaic = featured.filter((w) => w.id !== pair?.id).slice(0, 6);
+const stylistOf = (w: Work) => team.find((t) => t.id === w.data.stylist.id);
+---
+
+<section class="section-y bg-bg" aria-labelledby="trabajos-title">
+  <div class="container-wide">
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <SectionHeading id="trabajos-title" title={copy.title} lead={copy.lead} />
+      <Button href="/galeria" variant="secondary" icon="arrow-right" class="self-start md:self-auto">
+        {copy.seeAll}
+      </Button>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:mt-16 lg:grid-cols-12 lg:gap-8">
+      {
+        pair?.data.before && (
+          <figure class="reveal lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:col-span-5 lg:self-start">
+            <BeforeAfter
+              after={pair.data.image}
+              afterAlt={pair.data.alt}
+              before={pair.data.before.image}
+              beforeAlt={pair.data.before.alt}
+              sizes="(min-width: 64rem) 40vw, 100vw"
+              start={45}
+            />
+            <figcaption class="mt-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <span class="font-display-soft text-h3">{pair.data.title}</span>
+              <span class="text-small text-muted">
+                {copy.byLabel} {firstName(stylistOf(pair)?.data.name ?? '')}
+              </span>
+            </figcaption>
+          </figure>
+        )
+      }
+
+      <div class="columns-2 gap-4 md:columns-3 md:gap-6 lg:col-span-7 [&>figure]:mb-8 [&>figure]:break-inside-avoid">
+        {
+          mosaic.map((work, i) => (
+            <WorkFigure
+              work={work}
+              stylist={stylistOf(work)}
+              index={i}
+              sizes="(min-width: 64rem) 18vw, (min-width: 48rem) 30vw, 50vw"
+            />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,126 @@
+---
+import { Image, Picture } from 'astro:assets';
+import { site } from '../../config/site';
+import type { CategoryGroup, Work } from '../../lib/services';
+import { lowestPrice } from '../../lib/services';
+import { fill, formatDurationSpan, formatPrice } from '../../lib/format';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  groups: (CategoryGroup & { cover?: Work })[];
+}
+
+const { groups } = Astro.props;
+const copy = site.copy.services;
+---
+
+<section class="section-y overflow-hidden bg-surface" aria-labelledby="destacados-title" data-scroller>
+  <div class="container-site grid gap-10 lg:grid-cols-12 lg:gap-8">
+    <div class="lg:col-span-4 lg:pt-4">
+      <SectionHeading id="destacados-title" title={copy.featuredTitle} lead={copy.featuredLead} />
+      <div class="mt-8 flex items-center gap-4">
+        <a href="/servicios" class="label-caps inline-flex min-h-11 items-center gap-2 text-accent no-underline">
+          <span class="link-line">{copy.seeAll}</span>
+          <Icon name="arrow-right" size={16} />
+        </a>
+        <div class="ml-auto hidden gap-2 md:flex lg:ml-0">
+          <button
+            type="button"
+            class="inline-flex size-12 items-center justify-center rounded-button border border-accent text-accent transition-colors hover:bg-accent hover:text-on-accent disabled:cursor-default disabled:border-line disabled:text-muted disabled:hover:bg-transparent"
+            aria-label={copy.prevLabel}
+            data-scroller-prev
+          >
+            <Icon name="arrow-left" size={20} />
+          </button>
+          <button
+            type="button"
+            class="inline-flex size-12 items-center justify-center rounded-button border border-accent text-accent transition-colors hover:bg-accent hover:text-on-accent disabled:cursor-default disabled:border-line disabled:text-muted disabled:hover:bg-transparent"
+            aria-label={copy.nextLabel}
+            data-scroller-next
+          >
+            <Icon name="arrow-right" size={20} />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ul
+      class="-mx-4 flex min-w-0 snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto overscroll-x-contain px-4 pb-4 [scrollbar-width:thin] md:-mx-6 md:scroll-px-6 md:px-6 lg:col-span-8 lg:mx-0 lg:-mr-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:scroll-px-0 lg:px-0 lg:pr-8"
+      data-scroller-track
+    >
+      {
+        groups.map((g, i) => (
+          <li class="relative w-[72vw] max-w-80 shrink-0 snap-start sm:w-72" data-index={i}>
+            <a href={`/servicios#${g.category}`} class="group block text-ink no-underline">
+              <div class="frame aspect-4/5 rounded-photo">
+                {g.cover && (
+                  <Picture
+                    src={g.cover.data.image}
+                    alt={g.cover.data.alt}
+                    widths={[320, 480, 640]}
+                    sizes="(min-width: 40rem) 18rem, 72vw"
+                    formats={['avif', 'webp']}
+                    loading="lazy"
+                    class="size-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.03]"
+                   pictureAttributes={{ class: "contents" }}/>
+                )}
+              </div>
+              <div class="mt-4 flex items-start justify-between gap-3">
+                <div>
+                  <h3 class="label-caps text-[0.875rem] text-ink">{g.label}</h3>
+                  <p class="nums mt-1.5 text-small text-muted">
+                    {fill(copy.categoryCount, { n: g.services.length })} · {copy.categoryFromLabel}{' '}
+                    {formatPrice(lowestPrice(g.services))}
+                  </p>
+                  <p class="nums mt-1 inline-flex items-center gap-1.5 text-small text-muted">
+                    <Icon name="clock" size={15} class="text-brand" />
+                    {formatDurationSpan(g.services.map((s) => s.data.duration))}
+                  </p>
+                </div>
+                <span class="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-pill border border-line text-accent transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-on-accent">
+                  <Icon name="arrow-up-right" size={16} />
+                  <span class="sr-only">{copy.seeCategory}</span>
+                </span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  let controller: AbortController | undefined;
+
+  function setupScrollers() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    document.querySelectorAll<HTMLElement>('[data-scroller]').forEach((root) => {
+      const track = root.querySelector<HTMLElement>('[data-scroller-track]');
+      const prev = root.querySelector<HTMLButtonElement>('[data-scroller-prev]');
+      const next = root.querySelector<HTMLButtonElement>('[data-scroller-next]');
+      if (!track || !prev || !next) return;
+
+      const step = () => (track.firstElementChild as HTMLElement | null)?.offsetWidth ?? 300;
+      const update = () => {
+        const max = track.scrollWidth - track.clientWidth - 2;
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= max;
+      };
+      const behavior = () =>
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
+      prev.addEventListener('click', () => track.scrollBy({ left: -step() - 16, behavior: behavior() }), { signal });
+      next.addEventListener('click', () => track.scrollBy({ left: step() + 16, behavior: behavior() }), { signal });
+      track.addEventListener('scroll', update, { signal, passive: true });
+      window.addEventListener('resize', update, { signal });
+      update();
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupScrollers);
+</script>

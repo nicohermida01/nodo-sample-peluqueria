@@ -1,0 +1,81 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site } from '../config/site';
+import { getServices, needsDeposit } from '../lib/services';
+import { formatDuration, formatFromPrice } from '../lib/format';
+
+const { booking } = site.legal;
+const { deposit, cancellation, paymentDiscount, paymentMethods, promos, giftCards } = site.commercial;
+const services = await getServices();
+const withDeposit = services.filter(needsDeposit);
+const activePromos = promos.filter((p) => p.active);
+---
+
+<LegalLayout
+  title={booking.title}
+  seoTitle={site.pages.booking.title}
+  description={site.pages.booking.description}
+  lead={booking.lead}
+>
+  <section>
+    <h2>{booking.depositTitle}</h2>
+    <p>{deposit.description}</p>
+    {
+      withDeposit.length > 0 && (
+        <>
+          <p class="label-caps text-brand-strong">{booking.depositServicesLabel}</p>
+          <ul>
+            {withDeposit.map((s) => (
+              <li>
+                <a href={`/servicios#${s.data.category}`} class="link-line text-ink">{s.data.name}</a>
+                <span class="nums text-muted"> · {formatDuration(s.data.duration)} · {formatFromPrice(s.data.priceFrom)}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </section>
+
+  <section>
+    <h2>{booking.cancellationTitle}</h2>
+    <p>{cancellation.summary}</p>
+    <ul>
+      {cancellation.rules.map((rule) => <li>{rule}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>{booking.paymentTitle}</h2>
+    <p>
+      {booking.paymentMethodsLabel}: {paymentMethods.join(', ')}.
+    </p>
+    <p>{paymentDiscount.description}</p>
+  </section>
+
+  {
+    activePromos.length > 0 && (
+      <section>
+        <h2>{booking.promosTitle}</h2>
+        {activePromos.map((promo) => (
+          <>
+            <p>
+              <strong class="font-semibold">{promo.title}.</strong> {promo.description}
+            </p>
+            <ul>
+              {promo.conditions.map((c) => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          </>
+        ))}
+      </section>
+    )
+  }
+
+  <section>
+    <h2>{booking.giftCardsTitle}</h2>
+    <p>{giftCards.description}</p>
+    <p class="text-muted">{giftCards.notice}</p>
+  </section>
+</LegalLayout>

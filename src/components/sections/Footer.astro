@@ -1,0 +1,102 @@
+---
+import { site } from '../../config/site';
+import { whatsappHref } from '../../lib/booking';
+import { externalAttrs } from '../../lib/links';
+import Logo from '../ui/Logo.astro';
+import Icon from '../ui/Icon.astro';
+
+const year = new Date().getFullYear();
+const f = site.copy.footer;
+const { address, contact } = site;
+const telHref = `tel:+${contact.whatsapp}`;
+---
+
+<footer class="border-t border-line bg-surface text-ink">
+  <div class="container-site grid gap-12 py-16 md:grid-cols-12 md:gap-8 md:py-20">
+    <div class="md:col-span-4">
+      <Logo />
+      <p class="mt-4 max-w-[32ch] text-small text-muted">{site.brand.tagline} {f.closing}</p>
+      <a
+        href={site.social.instagram.url}
+        {...externalAttrs(site.social.instagram.url)}
+        class="mt-6 inline-flex min-h-11 items-center gap-2 text-ink link-line"
+      >
+        <Icon name="instagram" size={20} class="text-brand-strong" />
+        {site.social.instagram.handle}
+        <span class="sr-only">{site.ui.newTabHint}</span>
+      </a>
+    </div>
+
+    <nav aria-labelledby="footer-nav" class="md:col-span-2">
+      <h2 id="footer-nav" class="label-caps font-sans text-brand-strong">{f.navTitle}</h2>
+      <ul class="mt-4 space-y-1">
+        {
+          site.nav.map((item) => (
+            <li>
+              <a href={item.href} class="inline-flex min-h-10 items-center text-small text-ink link-line">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="md:col-span-3">
+      <h2 class="label-caps font-sans text-brand-strong">{f.contactTitle}</h2>
+      <address class="mt-4 space-y-1 text-small not-italic">
+        <p class="py-2">{address.street}, {address.neighborhood}<br />{address.city}</p>
+        <p>
+          <a href={whatsappHref()} {...externalAttrs(whatsappHref())} class="inline-flex min-h-10 items-center link-line">
+            WhatsApp<span class="sr-only"> {site.ui.newTabHint}</span>
+          </a>
+        </p>
+        <p><a href={telHref} class="nums inline-flex min-h-10 items-center link-line">{contact.phone}</a></p>
+        <p>
+          <a href={`mailto:${contact.email}`} class="inline-flex min-h-10 items-center break-all link-line">
+            {contact.email}
+          </a>
+        </p>
+      </address>
+    </div>
+
+    <div class="md:col-span-3">
+      <h2 class="label-caps font-sans text-brand-strong">{f.hoursTitle}</h2>
+      <dl class="mt-4 space-y-3 text-small">
+        {
+          site.hours.map((h) => (
+            <div>
+              <dt class="text-muted">{h.label}</dt>
+              <dd class="nums">{h.opens ? `${h.opens} a ${h.closes}` : site.copy.location.closedLabel}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+
+  <div class="border-t border-line">
+    <div class="container-site flex flex-col gap-4 py-6 text-[0.8125rem] text-muted md:flex-row md:items-center md:justify-between">
+      <p class="nums">© {year} {site.brand.name}</p>
+      <nav aria-labelledby="footer-legal">
+        <h2 id="footer-legal" class="sr-only">{f.legalTitle}</h2>
+        <ul class="flex flex-wrap gap-x-6 gap-y-1">
+          {
+            site.legalNav.map((item) => (
+              <li>
+                <a href={item.href} class="inline-flex min-h-10 items-center text-muted link-line hover:text-ink">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+    {
+      site.demoNotice.enabled && (
+        <p class="container-site border-t border-line py-4 text-[0.8125rem] text-muted">{site.demoNotice.text}</p>
+      )
+    }
+  </div>
+</footer>

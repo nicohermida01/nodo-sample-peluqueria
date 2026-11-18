@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/ui/PageIntro.astro';
+import WorkGrid from '../components/gallery/WorkGrid.astro';
+import FinalCta from '../components/sections/FinalCta.astro';
+import { site } from '../config/site';
+import { getServices, getTeam, getWorks } from '../lib/services';
+import { buildWorkViews } from '../lib/gallery';
+
+const [services, team, works] = await Promise.all([getServices(), getTeam(), getWorks()]);
+const items = await buildWorkViews(works, team, services);
+const page = site.pages.gallery;
+const cover = works[0]?.data.image;
+---
+
+<BaseLayout title={page.title} description={page.description} image={cover} imageAlt={works[0]?.data.alt}>
+  <PageIntro title={page.heading} lead={site.copy.gallery.lead} />
+  <section class="container-wide pb-20 md:pb-28" aria-label={page.title}>
+    <WorkGrid items={items} filterStylists={team} />
+  </section>
+  <FinalCta />
+</BaseLayout>

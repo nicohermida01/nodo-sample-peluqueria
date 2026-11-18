@@ -1,0 +1,51 @@
+---
+import { site } from '../../config/site';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+const copy = site.copy.testimonials;
+const [lead, ...rest] = site.testimonials;
+const hasPlaceholders = site.testimonials.some((t) => t.placeholder);
+---
+
+{
+  lead && (
+    <section class="section-y bg-bg" aria-labelledby="opiniones-title">
+      <div class="container-site grid gap-12 lg:grid-cols-12 lg:gap-8">
+        <div class="lg:col-span-4">
+          <SectionHeading id="opiniones-title" title={copy.title} />
+          {hasPlaceholders && (
+            <p class="reveal mt-6 inline-flex max-w-[34ch] border-l border-brand pl-4 text-small text-muted">
+              {copy.placeholderNotice}
+            </p>
+          )}
+        </div>
+
+        <div class="lg:col-span-8">
+          <figure class="reveal">
+            <blockquote class="font-display-soft text-[clamp(1.625rem,1.2rem+1.8vw,2.5rem)] leading-[1.18] tracking-[-0.015em]">
+              <p>“{lead.quote}”</p>
+            </blockquote>
+            <figcaption class="mt-6 text-small text-muted">
+              {lead.author}
+              {lead.service && <span> · {lead.service}</span>}
+            </figcaption>
+          </figure>
+
+          <div class="mt-14 grid gap-10 border-t border-line pt-10 md:grid-cols-2 md:gap-8">
+            {rest.map((t, i) => (
+              <figure class="reveal" style={`--i:${i}`}>
+                <blockquote class="font-display-soft text-[1.25rem] leading-snug">
+                  <p>“{t.quote}”</p>
+                </blockquote>
+                <figcaption class="mt-4 text-small text-muted">
+                  {t.author}
+                  {t.service && <span> · {t.service}</span>}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

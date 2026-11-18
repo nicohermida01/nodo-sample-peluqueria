@@ -1,0 +1,96 @@
+---
+import type { CategoryGroup } from '../../lib/services';
+import { site } from '../../config/site';
+
+interface Props {
+  groups: CategoryGroup[];
+}
+
+const { groups } = Astro.props;
+---
+
+<nav
+  aria-label={site.copy.services.categoryNavLabel}
+  class="sticky top-(--header-h) z-20 border-b border-line bg-bg"
+  data-category-nav
+>
+  <ul class="container-site flex gap-2 overflow-x-auto overscroll-x-contain py-3 [scrollbar-width:none]">
+    {
+      groups.map((g, i) => (
+        <li class="shrink-0">
+          <a
+            href={`#${g.category}`}
+            aria-current={i === 0 ? 'true' : undefined}
+            class="inline-flex min-h-11 items-center gap-2 rounded-pill border border-line px-4 text-[0.9375rem] font-semibold whitespace-nowrap text-ink no-underline transition-colors hover:border-accent aria-[current=true]:border-accent aria-[current=true]:bg-accent aria-[current=true]:text-on-accent"
+            data-category-link={g.category}
+          >
+            {g.label}
+            <span class="nums text-[0.8125rem] font-medium opacity-70">{g.services.length}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  let controller: AbortController | undefined;
+
+  function setupCategoryNav() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    const nav = document.querySelector<HTMLElement>('[data-category-nav]');
+    if (!nav) return;
+    const list = nav.querySelector('ul');
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('[data-category-link]'));
+    const sections = links
+      .map((link) => document.getElementById(link.dataset.categoryLink ?? ''))
+      .filter((el): el is HTMLElement => Boolean(el));
+    if (!sections.length) return;
+
+    let activeId = '';
+    const activate = (id: string) => {
+      if (id === activeId) return;
+      activeId = id;
+      links.forEach((link) => {
+        const active = link.dataset.categoryLink === id;
+        if (active) {
+          link.setAttribute('aria-current', 'true');
+          // Keep the active pill visible without moving the page vertically.
+          if (list) list.scrollLeft += link.getBoundingClientRect().left - list.getBoundingClientRect().left - 16;
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    // Active = the last section whose top has reached the bottom edge of the sticky nav.
+    // Above the first section (intro), the first category stays active.
+    const update = () => {
+      const line = nav.getBoundingClientRect().bottom + 24;
+      let current = sections[0]!;
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= line) current = section;
+        else break;
+      }
+      activate(current.id);
+    };
+
+    let frame = 0;
+    const schedule = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        update();
+      });
+    };
+    window.addEventListener('scroll', schedule, { signal, passive: true });
+    window.addEventListener('resize', schedule, { signal });
+    update();
+  }
+
+  document.addEventListener('astro:page-load', setupCategoryNav);
+  document.addEventListener('astro:before-swap', () => controller?.abort());
+</script>

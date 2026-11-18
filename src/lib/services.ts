@@ -86,8 +86,9 @@ export const longestDuration = (s: Service): number => s.data.duration.max ?? s.
 export const needsDeposit = (s: Service): boolean =>
   longestDuration(s) > site.commercial.deposit.minDurationMinutes;
 
+/** Lowest starting price; 0 for an empty list (callers drop empty groups). */
 export const lowestPrice = (services: Service[]): number =>
-  Math.min(...services.map((s) => s.data.priceFrom));
+  services.length === 0 ? 0 : Math.min(...services.map((s) => s.data.priceFrom));
 
 /** Cover work for a service category: a featured work linked to one of its services. */
 export function coverWorkFor(category: ServiceCategory, services: Service[], works: Work[]): Work | undefined {

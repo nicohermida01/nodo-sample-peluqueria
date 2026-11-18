@@ -1,0 +1,39 @@
+---
+import type { Service } from '../../lib/services';
+import { needsDeposit } from '../../lib/services';
+import { fill } from '../../lib/format';
+import { site } from '../../config/site';
+import PriceLine from './PriceLine.astro';
+import DurationLine from './DurationLine.astro';
+import BookLink from './BookLink.astro';
+import Badge from '../ui/Badge.astro';
+
+interface Props {
+  service: Service;
+  /** Pre-select a stylist in the booking message (profile pages). */
+  stylist?: string;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+  /** Tighter rows (hero carta). */
+  dense?: boolean;
+}
+
+const { service, stylist, headingLevel: Tag = 'h3', dense = false } = Astro.props;
+const s = service.data;
+const copy = site.copy.services;
+---
+
+<li class:list={['border-t border-line first:border-t-0', dense ? 'pt-2.5 pb-1' : 'py-4']}>
+  <div class="flex items-baseline gap-3">
+    <Tag class="font-display-soft text-[1.125rem] leading-tight tracking-[-0.01em] sm:text-[1.25rem]">{s.name}</Tag>
+    <span aria-hidden="true" class="min-w-6 flex-1 -translate-y-1 border-b border-dotted border-muted/60"></span>
+    <PriceLine price={s.priceFrom} class="text-[0.9375rem]" />
+  </div>
+  <div class:list={['flex flex-wrap items-center justify-between gap-x-4 gap-y-1', dense ? 'mt-0' : 'mt-1']}>
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[0.875rem]">
+      <DurationLine duration={s.duration} />
+      {s.requiresConsultation && <Badge>{copy.consultationLabel}</Badge>}
+      {needsDeposit(service) && <Badge tone="muted">{fill(copy.depositNote, { percent: site.commercial.deposit.percent })}</Badge>}
+    </div>
+    <BookLink service={s.name} stylist={stylist} consultation={s.requiresConsultation} />
+  </div>
+</li>

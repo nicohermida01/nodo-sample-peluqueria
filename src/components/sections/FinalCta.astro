@@ -1,0 +1,28 @@
+---
+import { site } from '../../config/site';
+import { bookingHref, whatsappHref } from '../../lib/booking';
+import Headline from '../ui/Headline.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  title?: string;
+  lead?: string;
+}
+
+const { title = site.copy.finalCta.title, lead = site.copy.finalCta.lead } = Astro.props;
+---
+
+<section class="section-y bg-bg" aria-labelledby="cta-title">
+  <div class="container-site text-center">
+    <h2 id="cta-title" class="reveal text-display mx-auto max-w-[14ch]">
+      <Headline text={title} />
+    </h2>
+    <p class="reveal mx-auto mt-6 max-w-[44ch] text-muted">{lead}</p>
+    <div class="reveal mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+      <Button href={bookingHref()}>{site.booking.ctaLabel}</Button>
+      <Button href={whatsappHref()} variant="secondary" icon="message" iconStart>
+        {site.booking.secondaryCtaLabel}
+      </Button>
+    </div>
+  </div>
+</section>

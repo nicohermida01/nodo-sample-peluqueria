@@ -1,0 +1,116 @@
+---
+import { Image, Picture } from 'astro:assets';
+import { site } from '../../config/site';
+import Headline from '../ui/Headline.astro';
+
+const { salon, products } = site.copy;
+const arch = salon.archPhoto;
+const [, wash, shelf, front] = salon.photos;
+const [firstParagraph, ...otherParagraphs] = salon.philosophy;
+---
+
+<section id="salon" class="on-night bg-night pb-20 text-on-night md:pb-28 lg:pb-36" aria-labelledby="salon-title">
+  <div class="container-site grid gap-12 lg:grid-cols-12 lg:gap-8">
+    {
+      arch && (
+        <div class="relative z-10 -mt-28 md:-mt-40 lg:col-span-5">
+          <div class="frame rounded-arch aspect-3/4 w-full max-w-[34rem]">
+            <Picture
+              src={arch.src}
+              alt={arch.alt}
+              widths={[360, 540, 720, 1080]}
+              sizes="(min-width: 80rem) 31rem, (min-width: 64rem) 36vw, (min-width: 34rem) 34rem, 92vw"
+              formats={['avif', 'webp']}
+              loading="lazy"
+              class="parallax size-full object-cover"
+             pictureAttributes={{ class: "contents" }}/>
+          </div>
+        </div>
+      )
+    }
+
+    <div class="lg:col-span-6 lg:col-start-7 lg:pt-32">
+      <h2 id="salon-title" class="reveal text-h1 max-w-[14ch]">
+        <Headline text={salon.title} />
+      </h2>
+      {
+        firstParagraph && (
+          <p class="reveal font-display-soft mt-8 max-w-[34ch] text-[clamp(1.25rem,1.1rem+0.6vw,1.625rem)] leading-snug">
+            {firstParagraph}
+          </p>
+        )
+      }
+      {otherParagraphs.map((p) => <p class="reveal mt-6 max-w-[52ch] text-on-night/80">{p}</p>)}
+    </div>
+  </div>
+
+  <div class="container-site mt-16 grid gap-4 md:mt-24 md:grid-cols-12 md:gap-6">
+    {
+      [wash, front].filter(Boolean).map((photo, i) => (
+        <div
+          class:list={[
+            'reveal frame aspect-video rounded-feature',
+            i === 0 ? 'md:col-span-7' : 'md:col-span-5 md:mt-24',
+          ]}
+          style={`--i:${i}`}
+        >
+          <Picture
+            src={photo!.src}
+            alt={photo!.alt}
+            widths={[480, 720, 960, 1280]}
+            sizes={i === 0 ? '(min-width: 48rem) 56vw, 92vw' : '(min-width: 48rem) 40vw, 92vw'}
+            formats={['avif', 'webp']}
+            loading="lazy"
+            class="parallax size-full object-cover"
+           pictureAttributes={{ class: "contents" }}/>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="container-site mt-20 md:mt-28">
+    <div class="grid gap-10 border-t border-on-night/20 pt-12 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-4">
+        <h3 class="reveal text-h2 max-w-[14ch]">{products.title}</h3>
+        <p class="reveal mt-4 max-w-[36ch] text-on-night/80">{products.lead}</p>
+        {
+          shelf && (
+            <div class="reveal frame mt-8 hidden aspect-video rounded-photo lg:block">
+              <Picture
+                src={shelf.src}
+                alt={shelf.alt}
+                widths={[480, 720]}
+                sizes="28vw"
+                formats={['avif', 'webp']}
+                loading="lazy"
+                class="size-full object-cover"
+               pictureAttributes={{ class: "contents" }}/>
+            </div>
+          )
+        }
+      </div>
+      <ul class="grid gap-x-8 sm:grid-cols-2 lg:col-span-7 lg:col-start-6">
+        {
+          products.lines.map((line, i) => (
+            <li class="reveal border-b border-on-night/20 py-6" style={`--i:${i % 2}`}>
+              <p class="font-display-soft text-h3">{line.name}</p>
+              <p class="mt-2 text-small text-on-night/80">{line.description}</p>
+              <p class="mt-4 flex flex-wrap gap-2">
+                {line.usedInSalon && (
+                  <span class="rounded-pill border border-on-night/30 px-2.5 py-0.5 text-[0.75rem] font-semibold">
+                    {products.usedLabel}
+                  </span>
+                )}
+                {line.forSale && (
+                  <span class="rounded-pill border border-brand-on-night/60 px-2.5 py-0.5 text-[0.75rem] font-semibold text-brand-on-night">
+                    {products.forSaleLabel}
+                  </span>
+                )}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

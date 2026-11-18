@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/ui/PageIntro.astro';
+import CategoryNav from '../components/services/CategoryNav.astro';
+import ServiceRow from '../components/services/ServiceRow.astro';
+import FinalCta from '../components/sections/FinalCta.astro';
+import { site } from '../config/site';
+import { fill } from '../lib/format';
+import { getServices, getTeam, getWorks, groupByCategory, stylistsOf } from '../lib/services';
+import { servicesSchema } from '../lib/schema';
+
+const [services, team, works] = await Promise.all([getServices(), getTeam(), getWorks()]);
+const groups = groupByCategory(services);
+const page = site.pages.services;
+const copy = site.copy.services;
+const pageUrl = new URL('/servicios', Astro.site ?? site.url).href;
+// Portrait work for the arch: a featured result without a before/after pair.
+const introWork = works.find((w) => w.data.featured && w.data.orientation === 'portrait' && !w.data.before);
+const introPhoto = introWork ? { src: introWork.data.image, alt: introWork.data.alt } : site.copy.salon.archPhoto;
+---
+
+<BaseLayout title={page.title} description={page.description} schema={[servicesSchema(services, pageUrl)]}>
+  <PageIntro title={page.heading} lead={copy.lead} photo={introPhoto}>
+    <p class="mt-4 max-w-[54ch] text-small text-muted">{site.commercial.deposit.description}</p>
+  </PageIntro>
+
+  <CategoryNav groups={groups} />
+
+  <div class="bg-bg pb-20 md:pb-28">
+    {
+      groups.map((g, gi) => (
+        <section
+          id={g.category}
+          aria-labelledby={`${g.category}-title`}
+          class:list={['scroll-mt-[calc(var(--header-h)+4.75rem)]', gi > 0 && 'border-t border-line']}
+        >
+          <div class="container-site grid gap-6 pt-14 pb-10 md:pt-20 lg:grid-cols-12 lg:gap-8">
+            <div class="lg:col-span-3">
+              <div class="lg:sticky lg:top-[calc(var(--header-h)+6rem)]">
+                <h2 id={`${g.category}-title`} class="reveal text-h2">
+                  {g.label}
+                </h2>
+                <p class="nums mt-2 text-small text-muted">{fill(copy.categoryCount, { n: g.services.length })}</p>
+              </div>
+            </div>
+            <ul class="lg:col-span-9">
+              {g.services.map((service) => (
+                <ServiceRow service={service} stylists={stylistsOf(service, team)} />
+              ))}
+            </ul>
+          </div>
+        </section>
+      ))
+    }
+  </div>
+
+  <FinalCta />
+</BaseLayout>

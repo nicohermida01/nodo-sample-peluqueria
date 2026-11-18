@@ -1,16 +1,35 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import Marquee from '../components/sections/Marquee.astro';
+import ProposalStrip from '../components/sections/ProposalStrip.astro';
+import CategoryScroller from '../components/services/CategoryScroller.astro';
+import GallerySelection from '../components/sections/GallerySelection.astro';
+import TeamSection from '../components/sections/TeamSection.astro';
+import SalonBand from '../components/sections/SalonBand.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import PromosGiftCards from '../components/sections/PromosGiftCards.astro';
+import LocationHours from '../components/sections/LocationHours.astro';
+import Faq from '../components/sections/Faq.astro';
+import FinalCta from '../components/sections/FinalCta.astro';
+import { coverWorkFor, getServices, getTeam, getWorks, groupByCategory } from '../lib/services';
+
+const [services, team, works] = await Promise.all([getServices(), getTeam(), getWorks()]);
+const groups = groupByCategory(services);
+const groupsWithCover = groups.map((g) => ({ ...g, cover: coverWorkFor(g.category, services, works) }));
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout announcement headerOverlay>
+  <Hero groups={groups} />
+  <Marquee />
+  <ProposalStrip />
+  <CategoryScroller groups={groupsWithCover} />
+  <GallerySelection works={works} team={team} />
+  <TeamSection team={team} />
+  <SalonBand />
+  <Testimonials />
+  <PromosGiftCards />
+  <LocationHours />
+  <Faq />
+  <FinalCta />
+</BaseLayout>

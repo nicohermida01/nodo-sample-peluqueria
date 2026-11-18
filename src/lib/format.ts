@@ -55,6 +55,7 @@ function single(total: number): string {
 
 /** Span across several services, e.g. a category: "45 min – 4 h". */
 export function formatDurationSpan(durations: Duration[]): string {
+  if (durations.length === 0) return '';
   const min = Math.min(...durations.map((d) => d.min));
   const max = Math.max(...durations.map((d) => d.max ?? d.min));
   return min === max ? formatDuration({ min }) : formatDuration({ min, max });

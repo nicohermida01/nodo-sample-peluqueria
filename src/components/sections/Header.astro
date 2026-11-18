@@ -1,0 +1,238 @@
+---
+import { site } from '../../config/site';
+import { bookingHref, whatsappHref } from '../../lib/booking';
+import { isCurrent, externalAttrs } from '../../lib/links';
+import Logo from '../ui/Logo.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  /** Home: transparent over the hero on desktop until the hero scrolls past. */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+const pathname = Astro.url.pathname;
+const openHours = site.hours.filter((h) => h.opens);
+---
+
+<header
+  class="site-header sticky top-0 z-40 border-b border-line bg-bg"
+  data-header
+  data-overlay={overlay ? '' : undefined}
+>
+  <div class="container-wide flex h-(--header-h) items-stretch justify-between gap-6">
+    <div class="flex items-center gap-8 xl:gap-12">
+      <Logo />
+
+      <nav aria-label={site.ui.mainNavLabel} class="hidden lg:block">
+        <ul class="flex items-center gap-6 xl:gap-8">
+        {
+          site.nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href, pathname) ? 'page' : undefined}
+                class="label-caps inline-flex min-h-11 items-center text-ink no-underline decoration-brand underline-offset-[0.5em] transition-colors hover:text-brand-strong aria-[current=page]:underline"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <div class="hidden md:block">
+        <Button href={bookingHref()}>{site.booking.ctaLabel}</Button>
+      </div>
+      <button
+        type="button"
+        class="-mr-2 inline-flex size-12 items-center justify-center text-ink lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label={site.ui.menuOpen}
+        data-menu-open
+      >
+        <Icon name="menu" size={26} />
+      </button>
+    </div>
+  </div>
+
+  <dialog
+    id="mobile-menu"
+    aria-label={site.ui.mainNavLabel}
+    class="menu-panel m-0 h-dvh max-h-none w-full max-w-none bg-bg p-0 text-ink"
+    data-menu
+  >
+    <div class="flex h-full flex-col">
+      <div class="container-wide flex h-(--header-h) shrink-0 items-center justify-between border-b border-line">
+        <Logo />
+        <button
+          type="button"
+          class="-mr-2 inline-flex size-12 items-center justify-center"
+          aria-label={site.ui.menuClose}
+          data-menu-close
+        >
+          <Icon name="x" size={26} />
+        </button>
+      </div>
+      <nav class="container-wide flex-1 overflow-y-auto py-8">
+        <ul class="flex flex-col">
+          {
+            site.nav.map((item, i) => (
+              <li class="menu-item border-b border-line" style={`--m:${i}`}>
+                <a
+                  href={item.href}
+                  aria-current={isCurrent(item.href, pathname) ? 'page' : undefined}
+                  class="font-display-soft flex min-h-16 items-center justify-between py-3 text-[2.25rem] leading-none tracking-[-0.02em] text-ink no-underline aria-[current=page]:text-brand-strong"
+                  data-menu-link
+                >
+                  {item.label}
+                  <Icon name="arrow-right" size={22} class="text-brand" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="mt-10 space-y-2 text-small text-muted">
+          <p>{site.address.street}, {site.address.neighborhood}</p>
+          {openHours.map((h) => <p class="nums">{h.label}, {h.opens} a {h.closes}</p>)}
+          <p>
+            <a href={site.social.instagram.url} {...externalAttrs(site.social.instagram.url)} class="link-line text-ink">
+              {site.social.instagram.handle}
+              <span class="sr-only">{site.ui.newTabHint}</span>
+            </a>
+          </p>
+        </div>
+      </nav>
+      <div class="container-wide grid shrink-0 gap-3 border-t border-line py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+        <Button href={bookingHref()} full>{site.booking.ctaLabel}</Button>
+        <Button href={whatsappHref()} variant="secondary" icon="message" iconStart full>
+          {site.booking.secondaryCtaLabel}
+        </Button>
+      </div>
+    </div>
+  </dialog>
+</header>
+
+<style>
+  /*
+   * Over the hero (desktop, JS only): the bar turns fully transparent so the photo runs under it.
+   * Ink text stays legible: the hero photo carries a cream top scrim (see Hero.astro) and the
+   * CTA is a solid chocolate button.
+   */
+  @media (min-width: 64rem) {
+    .site-header[data-over-hero] {
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+  .menu-panel::backdrop {
+    background: var(--color-bg);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .menu-panel[open] {
+      animation: menu-in 450ms var(--ease-out-soft);
+    }
+    .menu-panel[open] .menu-item {
+      animation: menu-item-in 500ms var(--ease-out-soft) both;
+      animation-delay: calc(80ms + var(--m) * 45ms);
+    }
+  }
+  @keyframes menu-in {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes menu-item-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+</style>
+
+<script>
+  let controller: AbortController | undefined;
+
+  function setupMenu() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    const dialog = document.querySelector<HTMLDialogElement>('[data-menu]');
+    const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+    if (!dialog || !openBtn) return;
+
+    const setExpanded = (open: boolean) => openBtn.setAttribute('aria-expanded', String(open));
+
+    openBtn.addEventListener(
+      'click',
+      () => {
+        dialog.showModal();
+        setExpanded(true);
+        document.documentElement.style.overflow = 'hidden';
+      },
+      { signal },
+    );
+    dialog.addEventListener(
+      'close',
+      () => {
+        setExpanded(false);
+        document.documentElement.style.overflow = '';
+        openBtn.focus();
+      },
+      { signal },
+    );
+    dialog
+      .querySelector('[data-menu-close]')
+      ?.addEventListener('click', () => dialog.close(), { signal });
+    dialog.querySelectorAll('[data-menu-link]').forEach((link) =>
+      link.addEventListener('click', () => dialog.close(), { signal }),
+    );
+    // Close if the viewport grows past the mobile breakpoint.
+    const desktop = window.matchMedia('(min-width: 64rem)');
+    desktop.addEventListener('change', (e) => e.matches && dialog.open && dialog.close(), { signal });
+  }
+
+  let overlayController: AbortController | undefined;
+
+  function setupOverlay() {
+    overlayController?.abort();
+    const header = document.querySelector<HTMLElement>('[data-header][data-overlay]');
+    const hero = document.querySelector<HTMLElement>('[data-hero]');
+    if (!header || !hero) return;
+    overlayController = new AbortController();
+    const { signal } = overlayController;
+    // Transparent while the hero is still under the header; opaque cream once it scrolls past.
+    const update = () =>
+      header.toggleAttribute('data-over-hero', hero.getBoundingClientRect().bottom > header.offsetHeight);
+    let frame = 0;
+    const schedule = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        update();
+      });
+    };
+    window.addEventListener('scroll', schedule, { signal, passive: true });
+    window.addEventListener('resize', schedule, { signal });
+    update();
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    setupMenu();
+    setupOverlay();
+  });
+  document.addEventListener('astro:before-swap', () => {
+    controller?.abort();
+    overlayController?.abort();
+    document.documentElement.style.overflow = '';
+  });
+</script>

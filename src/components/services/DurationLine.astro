@@ -1,0 +1,16 @@
+---
+import Icon from '../ui/Icon.astro';
+import { formatDuration, isoDuration } from '../../lib/format';
+
+interface Props {
+  duration: { min: number; max?: number };
+  class?: string;
+}
+
+const { duration, class: className } = Astro.props;
+---
+
+<p class:list={['nums inline-flex items-center gap-1.5 whitespace-nowrap text-muted', className]}>
+  <Icon name="clock" size={16} class="text-brand" />
+  <time datetime={isoDuration(duration.max ?? duration.min)}>{formatDuration(duration)}</time>
+</p>
