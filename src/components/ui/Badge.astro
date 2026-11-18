@@ -1,0 +1,18 @@
+---
+interface Props {
+  tone?: 'brand' | 'muted';
+  class?: string;
+}
+
+const { tone = 'brand', class: className } = Astro.props;
+---
+
+<span
+  class:list={[
+    'inline-flex items-center rounded-pill border px-2.5 py-0.5 text-[0.75rem] leading-5 font-semibold whitespace-nowrap',
+    tone === 'brand' ? 'border-brand-strong/50 text-brand-strong' : 'border-line text-muted',
+    className,
+  ]}
+>
+  <slot />
+</span>

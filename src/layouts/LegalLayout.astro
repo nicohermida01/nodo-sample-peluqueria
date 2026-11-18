@@ -1,0 +1,49 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  seoTitle: string;
+  description: string;
+  lead: string;
+}
+
+const { title, seoTitle, description, lead } = Astro.props;
+---
+
+<BaseLayout title={seoTitle} description={description}>
+  <article class="bg-bg pt-12 pb-24 md:pt-20 md:pb-32">
+    <div class="container-site">
+      <div class="measure mx-auto">
+        <h1 class="text-h1">{title}</h1>
+        <p class="mt-6 text-[1.125rem] text-muted">{lead}</p>
+        <div class="legal mt-12 border-t border-line pt-4">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal :global(h2) {
+    font-size: var(--text-h3);
+    line-height: 1.2;
+    margin-top: 3rem;
+  }
+  .legal :global(p),
+  .legal :global(ul) {
+    margin-top: 1rem;
+  }
+  .legal :global(ul) {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .legal :global(li) {
+    margin-top: 0.5rem;
+    padding-left: 0.25rem;
+  }
+  .legal :global(li::marker) {
+    color: var(--color-brand);
+  }
+</style>

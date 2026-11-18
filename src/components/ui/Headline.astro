@@ -1,0 +1,33 @@
+---
+import { parseHeadline } from '../../lib/format';
+
+interface Props {
+  text: string;
+  /** Wrap every word for the entrance animation (hero only). */
+  words?: boolean;
+}
+
+const { text, words = false } = Astro.props;
+const parts = parseHeadline(text);
+
+let index = 0;
+const split = parts.map((part) => ({
+  ...part,
+  tokens: part.text.split(/(\s+)/).filter((t) => t.length > 0).map((t) => {
+    const isSpace = /^\s+$/.test(t);
+    return { t, isSpace, i: isSpace ? -1 : index++ };
+  }),
+}));
+---
+
+{
+  words
+    ? split.map((part) => (
+        <span class:list={[part.emphasis && 'emph']}>
+          {part.tokens.map((tok) =>
+            tok.isSpace ? ' ' : <span class="word" style={`--w:${tok.i}`}>{tok.t}</span>,
+          )}
+        </span>
+      ))
+    : parts.map((part) => (part.emphasis ? <em class="emph">{part.text}</em> : part.text))
+}

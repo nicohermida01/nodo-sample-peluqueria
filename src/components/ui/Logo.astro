@@ -1,0 +1,26 @@
+---
+import { site } from '../../config/site';
+
+interface Props {
+  class?: string;
+  /** Show the small descriptor next to the wordmark. */
+  descriptor?: boolean;
+}
+
+const { class: className, descriptor = true } = Astro.props;
+---
+
+<a
+  href="/"
+  aria-label={site.ui.homeLabel}
+  class:list={['inline-flex min-h-11 items-baseline gap-2.5 text-ink no-underline', className]}
+>
+  <span class="font-display-soft text-[1.875rem] leading-none tracking-[-0.03em]">{site.brand.shortName}</span>
+  {
+    descriptor && (
+      <span class="label-caps hidden text-[0.75rem] tracking-[0.16em] text-muted sm:inline">
+        {site.brand.descriptor}
+      </span>
+    )
+  }
+</a>

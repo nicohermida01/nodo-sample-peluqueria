@@ -1,0 +1,126 @@
+---
+import '@fontsource-variable/fraunces/opsz.css';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '@fontsource-variable/manrope';
+import '../styles/global.css';
+import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';
+import frauncesItalicLatin from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2?url';
+import manropeLatin from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
+
+import type { ImageMetadata } from 'astro';
+import { ClientRouter } from 'astro:transitions';
+import { getImage } from 'astro:assets';
+import { site } from '../config/site';
+import { hairSalonSchema } from '../lib/schema';
+import Seo from '../components/ui/Seo.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import AnnouncementBar from '../components/sections/AnnouncementBar.astro';
+import Header from '../components/sections/Header.astro';
+import Footer from '../components/sections/Footer.astro';
+import StickyBookingBar from '../components/sections/StickyBookingBar.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  /** Extra JSON-LD blocks for this page. */
+  schema?: Record<string, unknown>[];
+  /** Show the promo announcement bar (home only by default). */
+  announcement?: boolean;
+  /** Home: header turns transparent over the hero on desktop. */
+  headerOverlay?: boolean;
+  /** Optional paper grain overlay. Off by default (CLAUDE.md → Texturas). */
+  grain?: boolean;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  schema = [],
+  announcement = false,
+  grain = false,
+  noindex = false,
+  headerOverlay = false,
+} = Astro.props;
+
+const salonImage = await getImage({ src: site.copy.salon.photos[0]!.src, width: 1200, format: 'jpg' });
+const salonImageUrl = new URL(salonImage.src, Astro.site ?? site.url).href;
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="preload" href={manropeLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={frauncesItalicLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+    <Seo title={title} description={description} image={image} imageAlt={imageAlt} noindex={noindex} />
+    <JsonLd data={hairSalonSchema(salonImageUrl)} />
+    {schema.map((data) => <JsonLd data={data} />)}
+    <ClientRouter />
+  </head>
+  <body class="flex min-h-dvh flex-col pb-[calc(4.75rem+env(safe-area-inset-bottom))] md:pb-0">
+    <a
+      href="#contenido"
+      class="label-caps sr-only z-50 bg-accent px-4 py-3 text-on-accent focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      {site.ui.skipLink}
+    </a>
+    {announcement && <AnnouncementBar />}
+    <Header overlay={headerOverlay} />
+    <main id="contenido" tabindex="-1" class="flex-1 outline-none">
+      <slot />
+    </main>
+    <Footer />
+    <StickyBookingBar />
+    {
+      grain && (
+        <svg class="grain" aria-hidden="true" width="100%" height="100%">
+          <filter id="grain-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#grain-filter)" />
+        </svg>
+      )
+    }
+
+    <script>
+      // Reveal-on-scroll fallback for browsers without scroll-driven animations.
+      // Content is visible by default: the hidden state only applies once JS adds `io-reveal`.
+      let observer: IntersectionObserver | undefined;
+
+      function setupReveal() {
+        observer?.disconnect();
+        const supported = CSS.supports('animation-timeline: view()');
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (supported || reduced || !('IntersectionObserver' in window)) return;
+
+        observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                observer?.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -6% 0px', threshold: 0.08 },
+        );
+        document.documentElement.classList.add('io-reveal');
+        document.querySelectorAll('.reveal:not(.is-in)').forEach((el) => observer?.observe(el));
+      }
+
+      document.addEventListener('astro:page-load', setupReveal);
+      document.addEventListener('astro:before-swap', () => observer?.disconnect());
+    </script>
+  </body>
+</html>

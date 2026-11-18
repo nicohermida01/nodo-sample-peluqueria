@@ -1,0 +1,52 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import { externalAttrs, isExternal } from '../../lib/links';
+import { site } from '../../config/site';
+
+type Variant = 'primary' | 'secondary' | 'primary-night' | 'secondary-night';
+
+interface Props {
+  href: string;
+  variant?: Variant;
+  icon?: IconName;
+  /** Icon placed before the label (e.g. WhatsApp). Default after. */
+  iconStart?: boolean;
+  class?: string;
+  /** Overrides the accessible name (keeps the visible label). */
+  ariaLabel?: string;
+  full?: boolean;
+}
+
+const { href, variant = 'primary', icon, iconStart = false, class: className, ariaLabel, full } = Astro.props;
+
+const variants: Record<Variant, string> = {
+  primary: 'border-accent bg-accent text-on-accent hover:bg-transparent hover:text-accent',
+  secondary: 'border-accent text-accent hover:bg-accent hover:text-on-accent',
+  'primary-night':
+    'border-brand-on-night bg-brand-on-night text-night hover:bg-transparent hover:text-brand-on-night',
+  'secondary-night': 'border-on-night/60 text-on-night hover:border-on-night hover:bg-on-night hover:text-night',
+};
+
+const external = isExternal(href);
+---
+
+<a
+  href={href}
+  {...externalAttrs(href)}
+  aria-label={ariaLabel}
+  class:list={[
+    'group/btn label-caps inline-flex min-h-12 items-center justify-center gap-2.5 rounded-button border px-6 py-3 text-center transition-colors duration-300 ease-out-soft',
+    variants[variant],
+    full && 'w-full',
+    className,
+  ]}
+>
+  {icon && iconStart && <Icon name={icon} size={18} />}
+  <span class="whitespace-nowrap"><slot /></span>
+  {
+    icon && !iconStart && (
+      <Icon name={icon} size={18} class="transition-transform duration-300 ease-out-soft group-hover/btn:translate-x-0.5" />
+    )
+  }
+  {external && !ariaLabel && <span class="sr-only">{site.ui.newTabHint}</span>}
+</a>

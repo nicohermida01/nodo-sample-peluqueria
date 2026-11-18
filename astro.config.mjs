@@ -10,6 +10,8 @@ export default defineConfig({
   // Public URL used for canonical, Open Graph and sitemap. Change it in src/config/site.ts.
   site: site.url,
   output: 'static',
+  // Inline the (small) CSS bundle so it never blocks first paint.
+  build: { inlineStylesheets: 'always' },
   // Default image service, made explicit so a rebrand never swaps it by accident.
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },

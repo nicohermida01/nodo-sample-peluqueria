@@ -1,0 +1,28 @@
+---
+import Headline from './Headline.astro';
+
+interface Props {
+  title: string;
+  lead?: string;
+  as?: 'h1' | 'h2';
+  id?: string;
+  size?: 'h1' | 'h2' | 'display';
+  align?: 'start' | 'center';
+  class?: string;
+}
+
+const { title, lead, as: Tag = 'h2', id, size = 'h2', align = 'start', class: className } = Astro.props;
+const sizes = { display: 'text-display', h1: 'text-h1', h2: 'text-h2' };
+---
+
+<div class:list={['reveal', align === 'center' && 'mx-auto text-center', className]}>
+  <Tag id={id} class:list={[sizes[size], 'max-w-[18ch]', align === 'center' && 'mx-auto']}>
+    <Headline text={title} />
+  </Tag>
+  {
+    lead && (
+      <p class:list={['mt-5 max-w-[52ch] text-muted md:mt-6', align === 'center' && 'mx-auto']}>{lead}</p>
+    )
+  }
+  <slot />
+</div>

@@ -1,0 +1,45 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image, Picture } from 'astro:assets';
+import Headline from './Headline.astro';
+
+interface Props {
+  title: string;
+  lead?: string;
+  /** Optional arch-cropped photo (the page's one arch). Use a portrait (3:4 / 4:5) source. */
+  photo?: { src: ImageMetadata; alt: string };
+}
+
+const { title, lead, photo } = Astro.props;
+---
+
+{
+  (
+    <header class="bg-bg pt-12 pb-14 md:pt-20 md:pb-20">
+      <div class="container-site grid items-end gap-10 md:grid-cols-12 md:gap-8">
+        <div class:list={[photo ? 'md:col-span-8' : 'md:col-span-10']}>
+          <h1 class="text-display max-w-[14ch]">
+            <Headline text={title} words />
+          </h1>
+          {lead && <p class="mt-6 max-w-[54ch] text-muted md:mt-8">{lead}</p>}
+          <slot />
+        </div>
+        {photo && (
+          <div class="hidden md:col-span-3 md:col-start-10 md:block">
+            <div class="frame rounded-arch aspect-3/4">
+              <Picture
+                src={photo.src}
+                alt={photo.alt}
+                widths={[240, 320, 480, 640]}
+                sizes="(min-width: 80rem) 18rem, 22vw"
+                formats={['avif', 'webp']}
+                loading="eager"
+                class="size-full object-cover"
+               pictureAttributes={{ class: "contents" }}/>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
+  )
+}
