@@ -1,0 +1,18 @@
+{
+  "name": "Corte de mujer",
+  "slug": "corte-mujer",
+  "category": "cortes",
+  "description": "Diagnóstico, lavado, corte y secado. Pensamos un corte que te funcione también el día que no te peinás.",
+  "duration": {
+    "min": 60,
+    "max": 75
+  },
+  "priceFrom": 38000,
+  "requiresConsultation": false,
+  "stylists": [
+    "julia-benitez",
+    "lucia-ferreyra"
+  ],
+  "featured": true,
+  "order": 1
+}

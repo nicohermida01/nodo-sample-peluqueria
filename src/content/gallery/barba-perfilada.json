@@ -1,0 +1,15 @@
+{
+  "title": "Barba perfilada",
+  "category": "barberia",
+  "stylist": "tomas-aguirre",
+  "service": "perfilado-barba",
+  "image": "../../assets/gallery/barba-perfilada.jpg",
+  "alt": "Barba corta perfilada a navaja con líneas definidas en mejillas y cuello, vista de perfil",
+  "orientation": "square",
+  "before": {
+    "image": "../../assets/gallery/barba-perfilada-antes.jpg",
+    "alt": "Barba crecida y despareja antes del perfilado, vista de perfil"
+  },
+  "featured": true,
+  "date": "2026-10-27"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Nutrición profunda",
+  "slug": "nutricion",
+  "category": "tratamientos",
+  "description": "Tratamiento reparador con máscara y calor para pelo seco, procesado o con decoloración.",
+  "duration": {
+    "min": 45
+  },
+  "priceFrom": 30000,
+  "requiresConsultation": false,
+  "stylists": [
+    "lucia-ferreyra",
+    "martina-sosa"
+  ],
+  "featured": false,
+  "order": 1
+}

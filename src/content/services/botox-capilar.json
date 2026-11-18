@@ -1,0 +1,18 @@
+{
+  "name": "Botox capilar",
+  "slug": "botox-capilar",
+  "category": "tratamientos",
+  "description": "Relleno de la fibra para pelo dañado: más cuerpo, brillo y menos frizz, sin alisar.",
+  "duration": {
+    "min": 90,
+    "max": 120
+  },
+  "priceFrom": 70000,
+  "requiresConsultation": false,
+  "stylists": [
+    "lucia-ferreyra",
+    "martina-sosa"
+  ],
+  "featured": false,
+  "order": 3
+}

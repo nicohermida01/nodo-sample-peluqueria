@@ -1,0 +1,17 @@
+{
+  "name": "Corrección de color",
+  "slug": "correccion-color",
+  "category": "color",
+  "description": "Para colores que no salieron como querías. Arrancamos con una consulta y un plan por etapas.",
+  "duration": {
+    "min": 240,
+    "max": 360
+  },
+  "priceFrom": 150000,
+  "requiresConsultation": true,
+  "stylists": [
+    "martina-sosa"
+  ],
+  "featured": false,
+  "order": 6
+}

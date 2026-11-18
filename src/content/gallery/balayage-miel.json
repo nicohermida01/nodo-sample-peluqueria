@@ -1,0 +1,15 @@
+{
+  "title": "Balayage miel",
+  "category": "color",
+  "stylist": "martina-sosa",
+  "service": "balayage",
+  "image": "../../assets/gallery/balayage-miel.jpg",
+  "alt": "Balayage en tonos miel sobre base castaña, pelo largo con ondas, vista posterior",
+  "orientation": "portrait",
+  "before": {
+    "image": "../../assets/gallery/balayage-miel-antes.jpg",
+    "alt": "Pelo largo castaño oscuro sin color, con puntas opacas, vista posterior"
+  },
+  "featured": true,
+  "date": "2026-10-30"
+}

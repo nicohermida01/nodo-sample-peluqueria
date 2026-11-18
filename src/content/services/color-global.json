@@ -1,0 +1,18 @@
+{
+  "name": "Color global",
+  "slug": "color-global",
+  "category": "color",
+  "description": "Color de medios a puntas en un solo tono, con brillo y protección de la fibra.",
+  "duration": {
+    "min": 120,
+    "max": 150
+  },
+  "priceFrom": 65000,
+  "requiresConsultation": false,
+  "stylists": [
+    "martina-sosa",
+    "julia-benitez"
+  ],
+  "featured": false,
+  "order": 2
+}

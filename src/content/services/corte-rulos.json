@@ -1,0 +1,18 @@
+{
+  "name": "Corte de rulos",
+  "slug": "corte-rulos",
+  "category": "cortes",
+  "description": "Corte en seco, rulo por rulo, para respetar la forma natural y ganar definición.",
+  "duration": {
+    "min": 75,
+    "max": 90
+  },
+  "priceFrom": 42000,
+  "requiresConsultation": false,
+  "stylists": [
+    "julia-benitez",
+    "lucia-ferreyra"
+  ],
+  "featured": false,
+  "order": 2
+}

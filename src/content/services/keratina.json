@@ -1,0 +1,17 @@
+{
+  "name": "Keratina sin formol",
+  "slug": "keratina",
+  "category": "tratamientos",
+  "description": "Alisado progresivo que reduce el frizz y el volumen. Dura de 3 a 4 meses según tu pelo.",
+  "duration": {
+    "min": 150,
+    "max": 210
+  },
+  "priceFrom": 90000,
+  "requiresConsultation": false,
+  "stylists": [
+    "lucia-ferreyra"
+  ],
+  "featured": true,
+  "order": 2
+}

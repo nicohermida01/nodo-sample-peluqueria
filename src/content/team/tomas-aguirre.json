@@ -1,0 +1,27 @@
+{
+  "name": "Tomás Aguirre",
+  "slug": "tomas-aguirre",
+  "role": "Barbero",
+  "specialties": [
+    "Fades",
+    "Barba a navaja",
+    "Cortes clásicos"
+  ],
+  "yearsOfExperience": 8,
+  "quote": "Toalla caliente, navaja y sin mirar el reloj.",
+  "bio": "Barbero de formación clásica. Hace fades prolijos, cortes a tijera y perfilados de barba a navaja con toalla caliente.",
+  "instagram": {
+    "handle": "@tomas.ejemplo",
+    "url": "https://www.instagram.com/tomas.ejemplo"
+  },
+  "photo": "../../assets/team/tomas-aguirre.jpg",
+  "photoAlt": "Retrato de Tomás, barbero, con barba corta y camisa de jean",
+  "photo2": "../../assets/team/tomas-aguirre-trabajando.jpg",
+  "photo2Alt": "Tomás perfilando una barba con navaja",
+  "signatureServices": [
+    "corte-barba",
+    "perfilado-barba",
+    "corte-hombre"
+  ],
+  "order": 4
+}

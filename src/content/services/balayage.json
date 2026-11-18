@@ -1,0 +1,18 @@
+{
+  "name": "Balayage",
+  "slug": "balayage",
+  "category": "color",
+  "description": "Aclarado a mano alzada, degradé natural y matiz incluido. Crece prolijo y dura meses.",
+  "duration": {
+    "min": 180,
+    "max": 240
+  },
+  "priceFrom": 120000,
+  "requiresConsultation": false,
+  "stylists": [
+    "martina-sosa",
+    "julia-benitez"
+  ],
+  "featured": true,
+  "order": 4
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Peinado social",
+  "slug": "peinado-social",
+  "category": "peinados-y-eventos",
+  "description": "Recogidos, semirecogidos y ondas para eventos. Traé una foto de referencia del look.",
+  "duration": {
+    "min": 60,
+    "max": 90
+  },
+  "priceFrom": 40000,
+  "requiresConsultation": false,
+  "stylists": [
+    "lucia-ferreyra"
+  ],
+  "featured": true,
+  "order": 2
+}

@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens live here (colors, fonts, type scale, radii, easing).
+ * The agreed values are documented in CLAUDE.md → "SISTEMA VISUAL".
+ * Components must only use these tokens, never hardcoded colors.
+ */
+@theme {
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Perfilado de barba",
+  "slug": "perfilado-barba",
+  "category": "barberia",
+  "description": "Diseño y perfilado de barba a navaja con toalla caliente.",
+  "duration": {
+    "min": 30
+  },
+  "priceFrom": 15000,
+  "requiresConsultation": false,
+  "stylists": [
+    "tomas-aguirre"
+  ],
+  "featured": false,
+  "order": 2
+}

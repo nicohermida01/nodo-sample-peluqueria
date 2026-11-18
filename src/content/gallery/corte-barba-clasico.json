@@ -1,0 +1,11 @@
+{
+  "title": "Corte y barba clásicos",
+  "category": "barberia",
+  "stylist": "tomas-aguirre",
+  "service": "corte-barba",
+  "image": "../../assets/gallery/corte-barba-clasico.jpg",
+  "alt": "Corte clásico con barba completa recortada y bigote prolijo, vista frontal",
+  "orientation": "square",
+  "featured": false,
+  "date": "2026-10-09"
+}

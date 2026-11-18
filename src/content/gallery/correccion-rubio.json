@@ -1,0 +1,15 @@
+{
+  "title": "Corrección a rubio frío",
+  "category": "color",
+  "stylist": "martina-sosa",
+  "service": "correccion-color",
+  "image": "../../assets/gallery/correccion-rubio.jpg",
+  "alt": "Rubio frío parejo después de una corrección, pelo a los hombros, vista posterior",
+  "orientation": "portrait",
+  "before": {
+    "image": "../../assets/gallery/correccion-rubio-antes.jpg",
+    "alt": "Pelo a los hombros con manchas anaranjadas de una decoloración anterior, vista posterior"
+  },
+  "featured": true,
+  "date": "2026-10-29"
+}

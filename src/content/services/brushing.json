@@ -1,0 +1,17 @@
+{
+  "name": "Lavado y brushing",
+  "slug": "brushing",
+  "category": "peinados-y-eventos",
+  "description": "Lavado y secado con cepillo: liso, con movimiento o ondas sueltas.",
+  "duration": {
+    "min": 45
+  },
+  "priceFrom": 22000,
+  "requiresConsultation": false,
+  "stylists": [
+    "lucia-ferreyra",
+    "julia-benitez"
+  ],
+  "featured": false,
+  "order": 1
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Lucía Ferreyra",
+  "slug": "lucia-ferreyra",
+  "role": "Estilista",
+  "specialties": [
+    "Peinados",
+    "Novias",
+    "Tratamientos"
+  ],
+  "yearsOfExperience": 7,
+  "quote": "Me gusta que el peinado aguante la noche entera sin que se note el esfuerzo.",
+  "bio": "Estilista de peinados y eventos. Arma novias y peinados sociales con prueba previa, y se ocupa de los tratamientos para recuperar pelo castigado.",
+  "instagram": {
+    "handle": "@lucia.ejemplo",
+    "url": "https://www.instagram.com/lucia.ejemplo"
+  },
+  "photo": "../../assets/team/lucia-ferreyra.jpg",
+  "photoAlt": "Retrato de Lucía, estilista, de pelo oscuro recogido, con delantal del salón",
+  "photo2": "../../assets/team/lucia-ferreyra-trabajando.jpg",
+  "photo2Alt": "Lucía armando un recogido bajo con trenzas sobre una clienta",
+  "signatureServices": [
+    "peinado-social",
+    "novias",
+    "keratina"
+  ],
+  "order": 3
+}

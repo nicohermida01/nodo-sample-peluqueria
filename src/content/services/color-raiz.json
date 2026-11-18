@@ -1,0 +1,17 @@
+{
+  "name": "Color de raíz",
+  "slug": "color-raiz",
+  "category": "color",
+  "description": "Retoque de crecimiento con tintes sin amoníaco, en tu tono o para cubrir canas.",
+  "duration": {
+    "min": 90
+  },
+  "priceFrom": 45000,
+  "requiresConsultation": false,
+  "stylists": [
+    "martina-sosa",
+    "julia-benitez"
+  ],
+  "featured": false,
+  "order": 1
+}

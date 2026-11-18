@@ -1,0 +1,11 @@
+{
+  "title": "Buzz cut",
+  "category": "barberia",
+  "stylist": "tomas-aguirre",
+  "service": "corte-hombre",
+  "image": "../../assets/gallery/buzz-cut.jpg",
+  "alt": "Buzz cut parejo con contorno marcado a navaja, vista de tres cuartos",
+  "orientation": "portrait",
+  "featured": false,
+  "date": "2026-10-08"
+}

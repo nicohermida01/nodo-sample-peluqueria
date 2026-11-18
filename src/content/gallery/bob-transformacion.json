@@ -1,0 +1,15 @@
+{
+  "title": "De largo a bob",
+  "category": "corte",
+  "stylist": "julia-benitez",
+  "service": "corte-mujer",
+  "image": "../../assets/gallery/bob-transformacion.jpg",
+  "alt": "Bob recto a la altura de la mandíbula, pelo castaño lacio, vista lateral",
+  "orientation": "portrait",
+  "before": {
+    "image": "../../assets/gallery/bob-transformacion-antes.jpg",
+    "alt": "Pelo largo castaño hasta la cintura, sin forma, vista lateral"
+  },
+  "featured": true,
+  "date": "2026-10-28"
+}

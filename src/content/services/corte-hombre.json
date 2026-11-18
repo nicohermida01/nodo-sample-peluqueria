@@ -1,0 +1,17 @@
+{
+  "name": "Corte de hombre",
+  "slug": "corte-hombre",
+  "category": "cortes",
+  "description": "Corte a tijera o máquina con terminación a navaja y lavado incluido.",
+  "duration": {
+    "min": 45
+  },
+  "priceFrom": 25000,
+  "requiresConsultation": false,
+  "stylists": [
+    "julia-benitez",
+    "tomas-aguirre"
+  ],
+  "featured": true,
+  "order": 3
+}

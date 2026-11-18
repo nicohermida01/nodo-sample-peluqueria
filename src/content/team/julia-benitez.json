@@ -1,0 +1,26 @@
+{
+  "name": "Julia Benítez",
+  "slug": "julia-benitez",
+  "role": "Directora creativa",
+  "specialties": [
+    "Cortes con forma",
+    "Balayage",
+    "Cambios de look"
+  ],
+  "yearsOfExperience": 14,
+  "quote": "Un buen corte es el que te queda bien también el día que no te peinás.",
+  "bio": "Fundó NUDO después de años en salones grandes, con la idea de atender menos cabezas por día y mejor. Se especializa en cortes con forma y en cambios de look pensados para cada persona.",
+  "instagram": {
+    "handle": "@julia.ejemplo",
+    "url": "https://www.instagram.com/julia.ejemplo"
+  },
+  "photo": "../../assets/team/julia-benitez.jpg",
+  "photoAlt": "Retrato de Julia, directora creativa, de pelo corto castaño, sonriendo en el salón",
+  "photo2": "../../assets/team/julia-benitez-trabajando.jpg",
+  "photo2Alt": "Julia cortando el pelo de una clienta con tijera, de perfil",
+  "signatureServices": [
+    "corte-mujer",
+    "balayage"
+  ],
+  "order": 1
+}

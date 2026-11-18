@@ -1,0 +1,27 @@
+{
+  "name": "Martina Sosa",
+  "slug": "martina-sosa",
+  "role": "Colorista",
+  "specialties": [
+    "Balayage",
+    "Rubios",
+    "Corrección de color"
+  ],
+  "yearsOfExperience": 9,
+  "quote": "El color tiene que verse bien hoy y crecer lindo en tres meses.",
+  "bio": "Colorista formada en técnicas de aclarado a mano alzada. Le gustan los rubios que parecen naturales y los casos difíciles: planifica las correcciones por etapas, sin arriesgar el pelo.",
+  "instagram": {
+    "handle": "@martina.ejemplo",
+    "url": "https://www.instagram.com/martina.ejemplo"
+  },
+  "photo": "../../assets/team/martina-sosa.jpg",
+  "photoAlt": "Retrato de Martina, colorista, de pelo largo rubio con ondas, frente a un espejo",
+  "photo2": "../../assets/team/martina-sosa-trabajando.jpg",
+  "photo2Alt": "Martina aplicando decolorante a mano alzada sobre un mechón",
+  "signatureServices": [
+    "balayage",
+    "correccion-color",
+    "mechas"
+  ],
+  "order": 2
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Corte + barba",
+  "slug": "corte-barba",
+  "category": "barberia",
+  "description": "Corte, perfilado de barba con navaja, toalla caliente y aceite.",
+  "duration": {
+    "min": 60
+  },
+  "priceFrom": 32000,
+  "requiresConsultation": false,
+  "stylists": [
+    "tomas-aguirre"
+  ],
+  "featured": true,
+  "order": 1
+}

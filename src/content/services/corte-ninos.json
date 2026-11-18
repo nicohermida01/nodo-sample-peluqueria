@@ -1,0 +1,17 @@
+{
+  "name": "Corte de niños",
+  "slug": "corte-ninos",
+  "category": "cortes",
+  "description": "Para chicos de hasta 12 años, con turnos tranquilos y sin apuro.",
+  "duration": {
+    "min": 30
+  },
+  "priceFrom": 18000,
+  "requiresConsultation": false,
+  "stylists": [
+    "lucia-ferreyra",
+    "tomas-aguirre"
+  ],
+  "featured": false,
+  "order": 4
+}

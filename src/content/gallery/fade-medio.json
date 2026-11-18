@@ -1,0 +1,11 @@
+{
+  "title": "Fade medio",
+  "category": "barberia",
+  "stylist": "tomas-aguirre",
+  "service": "corte-hombre",
+  "image": "../../assets/gallery/fade-medio.jpg",
+  "alt": "Fade medio degradado a máquina con parte superior texturizada, vista lateral",
+  "orientation": "portrait",
+  "featured": true,
+  "date": "2026-10-10"
+}

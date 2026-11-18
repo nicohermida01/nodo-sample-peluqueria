@@ -1,0 +1,17 @@
+{
+  "name": "Baño de color",
+  "slug": "gloss",
+  "category": "color",
+  "description": "Matiz o gloss para refrescar el tono, sumar brillo y neutralizar amarillos.",
+  "duration": {
+    "min": 45,
+    "max": 60
+  },
+  "priceFrom": 32000,
+  "requiresConsultation": false,
+  "stylists": [
+    "martina-sosa"
+  ],
+  "featured": false,
+  "order": 5
+}

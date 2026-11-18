@@ -1,0 +1,17 @@
+{
+  "name": "Flequillo y retoque",
+  "slug": "flequillo",
+  "category": "cortes",
+  "description": "Mantenimiento de flequillo o contorno entre cortes. Sin lavado.",
+  "duration": {
+    "min": 15
+  },
+  "priceFrom": 9000,
+  "requiresConsultation": false,
+  "stylists": [
+    "julia-benitez",
+    "lucia-ferreyra"
+  ],
+  "featured": false,
+  "order": 5
+}

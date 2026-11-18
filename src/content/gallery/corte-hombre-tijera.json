@@ -1,0 +1,11 @@
+{
+  "title": "Corte clásico a tijera",
+  "category": "corte",
+  "stylist": "julia-benitez",
+  "service": "corte-hombre",
+  "image": "../../assets/gallery/corte-hombre-tijera.jpg",
+  "alt": "Corte masculino clásico a tijera con raya al costado, vista lateral",
+  "orientation": "square",
+  "featured": false,
+  "date": "2026-10-22"
+}

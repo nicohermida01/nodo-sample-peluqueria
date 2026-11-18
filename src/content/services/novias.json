@@ -1,0 +1,17 @@
+{
+  "name": "Novias",
+  "slug": "novias",
+  "category": "peinados-y-eventos",
+  "description": "Prueba previa, peinado del día y retoque. Agendamos con anticipación según la fecha.",
+  "duration": {
+    "min": 120,
+    "max": 180
+  },
+  "priceFrom": 180000,
+  "requiresConsultation": true,
+  "stylists": [
+    "lucia-ferreyra"
+  ],
+  "featured": false,
+  "order": 3
+}

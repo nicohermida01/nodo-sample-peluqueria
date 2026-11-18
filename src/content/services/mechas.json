@@ -1,0 +1,17 @@
+{
+  "name": "Mechas",
+  "slug": "mechas",
+  "category": "color",
+  "description": "Mechas finas o marcadas con papel, para dar luz sin cambiar tu base.",
+  "duration": {
+    "min": 150,
+    "max": 180
+  },
+  "priceFrom": 85000,
+  "requiresConsultation": false,
+  "stylists": [
+    "martina-sosa"
+  ],
+  "featured": false,
+  "order": 3
+}
