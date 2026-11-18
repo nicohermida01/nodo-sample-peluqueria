@@ -15,7 +15,10 @@ export function bookingMessage({ service, stylist }: BookingTarget = {}): string
   const t = site.booking.whatsapp;
   const template =
     service && stylist ? t.serviceWithStylist : service ? t.service : stylist ? t.stylist : t.generic;
-  return template.replace('{service}', service ?? '').replace('{stylist}', stylist ?? '');
+  // Callbacks insert names literally (no "$&"-style replacement patterns).
+  return template
+    .replaceAll('{service}', () => service ?? '')
+    .replaceAll('{stylist}', () => stylist ?? '');
 }
 
 /**
