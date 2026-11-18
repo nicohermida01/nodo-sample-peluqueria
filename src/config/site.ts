@@ -344,7 +344,7 @@ const paymentDiscount = {
 };
 
 export const site: SiteConfig = {
-  url: 'https://nudo-estudio-de-pelo.example.com',
+  url: 'https://nodo-sample-peluqueria.vercel.app',
   lang: 'es-AR',
   locale: 'es_AR',
 
